@@ -3,11 +3,11 @@ plugins {
 }
 
 android {
-    namespace 'com.sirfootball.testapp'
+    namespace 'com.sirfootball.android'
     compileSdk 34
 
     defaultConfig {
-        applicationId "com.sirfootball.testapp"
+        applicationId "com.sirfootball.android"
         minSdk 26
         targetSdk 34
         versionCode 1
@@ -23,8 +23,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
     buildFeatures {
         viewBinding true
