@@ -1,19 +1,13 @@
-package com.sirfootball.android.ui.notifications;
+package com.sirfootball.android.ui.notifications
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 
-public class NotificationsViewModel extends ViewModel {
+class NotificationsViewModel : ViewModel() {
 
-    private final MutableLiveData<String> mText;
-
-    public NotificationsViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is notifications fragment");
+    private val _text = MutableLiveData<String>().apply {
+        value = "This is notifications Fragment"
     }
-
-    public LiveData<String> getText() {
-        return mText;
-    }
+    val text: LiveData<String> = _text
 }

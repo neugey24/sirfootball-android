@@ -1,19 +1,13 @@
-package com.sirfootball.android.ui.dashboard;
+package com.sirfootball.android.ui.dashboard
 
-import androidx.lifecycle.LiveData;
-import androidx.lifecycle.MutableLiveData;
-import androidx.lifecycle.ViewModel;
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 
-public class DashboardViewModel extends ViewModel {
+class DashboardViewModel : ViewModel() {
 
-    private final MutableLiveData<String> mText;
-
-    public DashboardViewModel() {
-        mText = new MutableLiveData<>();
-        mText.setValue("This is dashboard fragment");
+    private val _text = MutableLiveData<String>().apply {
+        value = "This is dashboard Fragment"
     }
-
-    public LiveData<String> getText() {
-        return mText;
-    }
+    val text: LiveData<String> = _text
 }

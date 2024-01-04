@@ -20,4 +20,5 @@ dependencyResolutionManagement {
 }
 
 rootProject.name = "Sir Football Android App"
-include ':app'
+include(":app")
+ 
