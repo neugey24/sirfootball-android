@@ -7,13 +7,47 @@
         android:title="@string/title_home" />
 
     <item
-        android:id="@+id/navigation_dashboard"
-        android:icon="@drawable/ic_dashboard_black_24dp"
-        android:title="@string/title_dashboard" />
+        android:id="@+id/navigation_draft"
+        android:icon="@drawable/ic_swap_calls_black_24dp"
+        android:title="@string/title_draft" />
 
     <item
-        android:id="@+id/navigation_notifications"
-        android:icon="@drawable/ic_notifications_black_24dp"
-        android:title="@string/title_notifications" />
+        android:id="@+id/navigation_add"
+        android:icon="@drawable/ic_add_black_24dp"
+        android:title="@string/title_add" />
+
+    <item
+        android:id="@+id/navigation_questions"
+        android:icon="@drawable/ic_help_center_black_24dp"
+        android:title="@string/title_questions" />
+
+    <item
+        android:id="@+id/navigation_settings"
+        android:icon="@drawable/ic_settings_black_24dp"
+        android:title="@string/title_settings" />
 
 </menu>
+
+<!--
+               SFLockerRoomView(path: $path)
+                    .tabItem {
+                        Label("Locker Room", systemImage: "door.left.hand.open")
+                    }.environmentObject(appUser)
+                SFDraftView()
+                    .tabItem {
+                        Label("Draft", systemImage: "arrow.triangle.swap")
+                    }.environmentObject(appUser)
+                SFAddView()
+                    .tabItem {
+                        Label("Add", systemImage: "plus.app")
+                    }.environmentObject(appUser)
+                SFFaqView()
+                    .tabItem {
+                        Label("Questions", systemImage: "person.fill.questionmark")
+                    }.environmentObject(appUser)
+                SFSettingsView()
+                    .tabItem {
+                        Label("Settings", systemImage: "gearshape.fill")
+                    }.environmentObject(appUser)
+
+-->

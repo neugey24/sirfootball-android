@@ -12,14 +12,26 @@
         tools:layout="@layout/fragment_home" />
 
     <fragment
-        android:id="@+id/navigation_dashboard"
-        android:name="com.sirfootball.android.ui.dashboard.DashboardFragment"
-        android:label="@string/title_dashboard"
-        tools:layout="@layout/fragment_dashboard" />
+        android:id="@+id/navigation_draft"
+        android:name="com.sirfootball.android.ui.draft.DraftFragment"
+        android:label="@string/title_draft"
+        tools:layout="@layout/fragment_draft" />
 
     <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.sirfootball.android.ui.notifications.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+        android:id="@+id/navigation_add"
+        android:name="com.sirfootball.android.ui.add.AddFragment"
+        android:label="@string/title_add"
+        tools:layout="@layout/fragment_add" />
+
+    <fragment
+        android:id="@+id/navigation_questions"
+        android:name="com.sirfootball.android.ui.questions.QuestionsFragment"
+        android:label="@string/title_questions"
+        tools:layout="@layout/fragment_questions" />
+
+    <fragment
+        android:id="@+id/navigation_settings"
+        android:name="com.sirfootball.android.ui.settings.SettingsFragment"
+        android:label="@string/title_settings"
+        tools:layout="@layout/fragment_settings" />
 </navigation>

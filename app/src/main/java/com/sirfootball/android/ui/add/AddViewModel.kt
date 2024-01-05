@@ -1,13 +1,13 @@
-package com.sirfootball.android.ui.notifications
+package com.sirfootball.android.ui.add
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
-class NotificationsViewModel : ViewModel() {
+class AddViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is notifications Fragment"
+        value = "This is Add Fragment"
     }
     val text: LiveData<String> = _text
 }
