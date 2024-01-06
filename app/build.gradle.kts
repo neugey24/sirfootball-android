@@ -1,6 +1,8 @@
 plugins {
     alias(libs.plugins.androidApplication)
     alias(libs.plugins.jetbrainsKotlinAndroid)
+    kotlin("kapt")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -70,6 +72,15 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
 
+    implementation("androidx.compose.material3:material3:1.1.2")
+    implementation("androidx.compose.material3:material3-window-size-class:1.1.2")
+    implementation("androidx.navigation:navigation-compose:2.7.6")
+
+    implementation("com.google.dagger:hilt-android:2.48.1")
+    kapt("com.google.dagger:hilt-android-compiler:2.48.1")
+    implementation("androidx.hilt:hilt-navigation-compose:1.1.0")
+
+
     implementation(libs.retrofit)
     implementation(libs.converter.moshi)
 
@@ -79,4 +90,9 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+}
+
+// Allow references to generated code
+kapt {
+    correctErrorTypes = true
 }

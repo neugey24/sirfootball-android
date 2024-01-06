@@ -1,4 +1,4 @@
-package com.sirfootball.android.model
+package com.sirfootball.android.data.model
 
 data class LoadUserTeamsResponse (
     val result: String,
