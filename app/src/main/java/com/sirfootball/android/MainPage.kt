@@ -12,10 +12,16 @@ import androidx.compose.material3.NavigationBarItem
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.navigation
+import androidx.navigation.navArgument
+import com.sirfootball.android.ui.add.AddForGamePage
+import com.sirfootball.android.ui.nav.AddRoutes
 import com.sirfootball.android.ui.nav.SFBottomNavItem
+import com.sirfootball.android.ui.root.AddTeamPage
 import com.sirfootball.android.ui.root.LockerRoomPage
 import com.sirfootball.android.ui.root.StubPage
 
@@ -50,13 +56,13 @@ private fun MainScreenNavigationConfigurations(
 ) {
     NavHost(navController, startDestination = SFBottomNavItem.LockerRoom.route) {
         composable(SFBottomNavItem.LockerRoom.route) {
-            LockerRoomPage()
+            LockerRoomPage(navController)
         }
         composable(SFBottomNavItem.Draft.route) {
             StubPage(titleIn = SFBottomNavItem.Draft.title)
         }
         composable(SFBottomNavItem.Add.route) {
-            StubPage(titleIn = SFBottomNavItem.Add.title)
+            AddTeamPage(navController)
         }
         composable(SFBottomNavItem.Questions.route) {
             StubPage(titleIn = SFBottomNavItem.Questions.title)
@@ -64,6 +70,18 @@ private fun MainScreenNavigationConfigurations(
         composable(SFBottomNavItem.Settings.route) {
             StubPage(titleIn = SFBottomNavItem.Settings.title)
         }
+
+        navigation(startDestination = SFBottomNavItem.Add.route, route = "addHome") {
+            composable(route = SFBottomNavItem.Add.route) {
+                AddTeamPage(navController)
+            }
+            composable(route = AddRoutes.LEAGUES_BY_GAME, arguments = listOf(
+                navArgument(AddRoutes.ARG_GAME_ABBREV) { type = NavType.StringType})) {
+                val gameAbbrevArgIn = it.arguments?.getString(AddRoutes.ARG_GAME_ABBREV) ?: "UNK"
+                AddForGamePage(navController = navController, gameAbbrev = gameAbbrevArgIn)
+            }
+        }
+
     }
 }
 
