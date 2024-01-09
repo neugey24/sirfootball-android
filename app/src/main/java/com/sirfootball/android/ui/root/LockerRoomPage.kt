@@ -2,6 +2,7 @@ package com.sirfootball.android.ui.root
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -28,11 +29,13 @@ import com.sirfootball.android.data.api.ApiState
 import com.sirfootball.android.data.model.UserTeam
 import com.sirfootball.android.structure.SirAvatar
 import com.sirfootball.android.structure.SirGame
+import com.sirfootball.android.ui.nav.AddRoutes
+import com.sirfootball.android.ui.nav.TeamRoutes
 import com.sirfootball.android.viewmodel.GetTeamsViewModel
 
 
 @Composable
-fun LockerRoomPage(navHostController: NavHostController) {
+fun LockerRoomPage(navController: NavHostController) {
     val viewModel = hiltViewModel<GetTeamsViewModel>()
     val loadState = viewModel.getTeamsResponse.value
 
@@ -75,7 +78,7 @@ fun LockerRoomPage(navHostController: NavHostController) {
                         ) {
                             for (teamInfo in responseData.userTeams ) {
                                 item {
-                                    RenderTeamBlock(teamInfo)
+                                    RenderTeamBlock(teamInfo, navController)
                                 }
                              }
                         }
@@ -98,14 +101,18 @@ fun LockerRoomPage(navHostController: NavHostController) {
 }
 
 @Composable
-fun RenderTeamBlock(teamInfo: UserTeam) {
+fun RenderTeamBlock(teamInfo: UserTeam, navController: NavHostController) {
 
     Row(
+
         horizontalArrangement = Arrangement.spacedBy(18.dp),
         modifier = Modifier.background(color = colorResource(R.color.panel_bg)).fillMaxWidth().padding(
             horizontal = 8.dp,
             vertical = 8.dp,
-        )) {
+        ).clickable(enabled =  true, onClick = {
+            navController.navigate(
+                TeamRoutes.TEAM_HOME.replace(TeamRoutes.ARG_TAG_TEAM_ID, teamInfo.team_id.toString()))
+        })) {
 
             Image(
                 painter = painterResource(

@@ -21,9 +21,12 @@ import androidx.navigation.navArgument
 import com.sirfootball.android.ui.add.AddForGamePage
 import com.sirfootball.android.ui.nav.AddRoutes
 import com.sirfootball.android.ui.nav.SFBottomNavItem
+import com.sirfootball.android.ui.nav.TeamRoutes
 import com.sirfootball.android.ui.root.AddTeamPage
 import com.sirfootball.android.ui.root.LockerRoomPage
 import com.sirfootball.android.ui.root.StubPage
+import com.sirfootball.android.ui.team.LeagueHomePage
+import com.sirfootball.android.ui.team.TeamHomePage
 
 
 @Composable
@@ -71,7 +74,7 @@ private fun MainScreenNavigationConfigurations(
             StubPage(titleIn = SFBottomNavItem.Settings.title)
         }
 
-        navigation(startDestination = SFBottomNavItem.Add.route, route = "addHome") {
+        navigation(startDestination = SFBottomNavItem.Add.route, route = "addStub") {
             composable(route = SFBottomNavItem.Add.route) {
                 AddTeamPage(navController)
             }
@@ -80,6 +83,32 @@ private fun MainScreenNavigationConfigurations(
                 val gameAbbrevArgIn = it.arguments?.getString(AddRoutes.ARG_GAME_ABBREV) ?: "UNK"
                 AddForGamePage(navController = navController, gameAbbrev = gameAbbrevArgIn)
             }
+        }
+
+        navigation(startDestination = SFBottomNavItem.LockerRoom.route, route = "lockerStub") {
+            composable(route = SFBottomNavItem.LockerRoom.route) {
+                LockerRoomPage(navController)
+            }
+            composable(route = TeamRoutes.TEAM_HOME, arguments = listOf(
+                navArgument(TeamRoutes.ARG_TEAM_ID) { type = NavType.IntType})) {
+                val teamIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_TEAM_ID) ?: -1
+                TeamHomePage(navController = navController, teamId = teamIdArgIn)
+            }
+
+            navigation(startDestination = TeamRoutes.TEAM_HOME, route = "teamStub") {
+                composable(route = TeamRoutes.TEAM_HOME, arguments = listOf(
+                    navArgument(TeamRoutes.ARG_TEAM_ID) { type = NavType.IntType})) {
+                    val teamIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_TEAM_ID) ?: -1
+                    TeamHomePage(navController = navController, teamId = teamIdArgIn)
+                }
+                composable(route = TeamRoutes.LEAGUE_HOME, arguments = listOf(
+                    navArgument(TeamRoutes.ARG_LEAGUE_ID) { type = NavType.IntType})) {
+                    val leagueIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_LEAGUE_ID) ?: -1
+                    LeagueHomePage(navController = navController, leagueId = leagueIdArgIn)
+                }
+
+            }
+
         }
 
     }
