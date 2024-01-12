@@ -35,4 +35,17 @@ class DataPersistenceViewModel @Inject constructor(private val apiService: AppSe
             }
         }
     }
+
+    fun claimTeam(leagueId: Int) {
+        viewModelScope.launch {
+            try {
+                val response = apiService.claimTeam(leagueId = leagueId)
+                _response.value = ApiState.Success(response)
+            } catch (e: Exception) {
+                val errorMessage = "error during claiming team with team data"
+                Log.e("API_ERROR", errorMessage, e)
+                _response.value = ApiState.Error(errorMessage)
+            }
+        }
+    }
 }

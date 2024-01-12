@@ -1,7 +1,6 @@
 package com.sirfootball.android.ui.add
 
 import android.util.Log
-import android.widget.GridView
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -14,24 +13,18 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldColors
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -47,6 +40,7 @@ import androidx.navigation.NavHostController
 import com.sirfootball.android.R
 import com.sirfootball.android.data.api.ApiState
 import com.sirfootball.android.data.model.AvailableLeague
+import com.sirfootball.android.data.model.GeneralPersistenceResponse
 import com.sirfootball.android.data.model.NewTeamFormData
 import com.sirfootball.android.structure.SirGame
 import com.sirfootball.android.ui.nav.SFBottomNavItem
@@ -124,7 +118,10 @@ fun AddForGamePage(navController: NavHostController, gameAbbrev: String) {
                     for (leagueInfo in leaguesForGame) {
                         item {
                             RenderLeagueBlock(leagueInfo, sheetValueChange = {showBottomSheet = it},
-                                toJoinLeague = {toJoinLeague = it})
+                                toJoinLeague = {toJoinLeague = it},
+                                saveViewModel = saveViewModel, saveState = saveState,
+                                navController = navController
+                                )
                         }
                      }
                 }
@@ -230,9 +227,11 @@ fun AddForGamePage(navController: NavHostController, gameAbbrev: String) {
 fun RenderLeagueBlock(
     leagueInfo: AvailableLeague,
     sheetValueChange: (Boolean) -> Unit,
-    toJoinLeague: (AvailableLeague) -> Unit
+    toJoinLeague: (AvailableLeague) -> Unit,
+    saveViewModel: DataPersistenceViewModel,
+    saveState: ApiState<GeneralPersistenceResponse>,
+    navController: NavHostController
 ) {
-    val scope = rememberCoroutineScope()
     Row(
         horizontalArrangement = Arrangement.spacedBy(18.dp),
         modifier = Modifier
@@ -245,28 +244,56 @@ fun RenderLeagueBlock(
 
             Column(horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.fillMaxWidth()) {
                 Text(leagueInfo.league_name, fontSize = 22.sp, color = colorResource(R.color.panel_fg))
-                Text(
-                    "Draft Date: ${leagueInfo.draft_date}",
-                    fontSize = 16.sp,
-                    color = colorResource(R.color.panel_fg)
-                )
-                Row {
-                    Text(
-                        "Human Teams: (${leagueInfo.teamCount}/${leagueInfo.league_size})      ",
-                        fontSize = 18.sp,
-                        fontWeight = FontWeight.Bold,
-                        color = colorResource(R.color.panel_fg)
-                    )
+
+                if (leagueInfo.joinType == "claim") {
                     ElevatedButton(contentPadding = PaddingValues(all = 3.dp),
                         modifier = Modifier.size(width = 90.dp, height = 26.dp),
                         onClick = {
-                            toJoinLeague(leagueInfo)
-                            sheetValueChange(true)
+                            saveViewModel.claimTeam(leagueInfo.league_id)
                         }
                     ) {
-                        Text("Join", fontSize = 14.sp)
+                        Text("Claim Team", fontSize = 14.sp)
+                        when (saveState) {
+                            is ApiState.Loading -> {
+
+                            }
+
+                            is ApiState.Success -> {
+                                Log.i("Save", "Claim team successful response received")
+                                navController.navigate(SFBottomNavItem.LockerRoom.route)
+                            }
+
+                            else -> {
+                                Log.i("Save", "Claim team failed")
+                            }
+                        }
+                    }
+                } else {
+                    Text(
+                        "Draft Date: ${leagueInfo.draft_date}",
+                        fontSize = 16.sp,
+                        color = colorResource(R.color.panel_fg)
+                    )
+                    Row {
+                        Text(
+                            "Human Teams: (${leagueInfo.teamCount}/${leagueInfo.league_size})      ",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.Bold,
+                            color = colorResource(R.color.panel_fg)
+                        )
+                        ElevatedButton(contentPadding = PaddingValues(all = 3.dp),
+                            modifier = Modifier.size(width = 90.dp, height = 26.dp),
+                            onClick = {
+                                toJoinLeague(leagueInfo)
+                                sheetValueChange(true)
+                            }
+                        ) {
+                            Text("Join", fontSize = 14.sp)
+                        }
                     }
                 }
+
+
         }
     }
 }

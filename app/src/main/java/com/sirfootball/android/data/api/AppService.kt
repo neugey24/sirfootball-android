@@ -4,6 +4,8 @@ import com.sirfootball.android.data.model.GeneralPersistenceResponse
 import com.sirfootball.android.data.model.GetLeagueInfoResponse
 import com.sirfootball.android.data.model.GetTeamInfoResponse
 import com.sirfootball.android.data.model.LoadJoinLeagueListResponse
+import com.sirfootball.android.data.model.LoadPreviewResponse
+import com.sirfootball.android.data.model.LoadScorecardResponse
 import com.sirfootball.android.data.model.LoadUserTeamsResponse
 import com.sirfootball.android.data.model.NewTeamFormData
 import retrofit2.http.Body
@@ -29,14 +31,31 @@ interface AppService {
     suspend fun joinLeagueList(): LoadJoinLeagueListResponse
 
     @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
-    @POST("joinLeague/{leagueId}")
-    suspend fun joinLeague(@Path("leagueId") leagueId : Int, @Body postData : NewTeamFormData): GeneralPersistenceResponse
-
-    @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
     @GET("getTeamInfo/{teamId}")
     suspend fun getTeamInfo(@Path("teamId") teamId : Int): GetTeamInfoResponse
 
     @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
     @GET("getLeagueInfo/{leagueId}")
     suspend fun getLeagueInfo(@Path("leagueId") leagueId : Int): GetLeagueInfoResponse
+
+    @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
+    @GET("getPreview/{leagueId}/{weekNum}/{matchupNum}")
+    suspend fun getPreview(@Path("leagueId") leagueId : Int,
+                           @Path("weekNum") weekNum : Int,
+                           @Path("matchupNum") matchupNum : Int): LoadPreviewResponse
+
+    @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
+    @GET("getScorecard/{leagueId}/{weekNum}/{matchupNum}")
+    suspend fun getScorecard(@Path("leagueId") leagueId : Int,
+                           @Path("weekNum") weekNum : Int,
+                           @Path("matchupNum") matchupNum : Int): LoadScorecardResponse
+
+    @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
+    @POST("joinLeague/{leagueId}")
+    suspend fun joinLeague(@Path("leagueId") leagueId : Int, @Body postData : NewTeamFormData): GeneralPersistenceResponse
+
+    @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
+    @GET("claimTeam/{leagueId}")
+    suspend fun claimTeam(@Path("leagueId") leagueId : Int): GeneralPersistenceResponse
+
 }

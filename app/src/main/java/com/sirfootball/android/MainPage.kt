@@ -26,6 +26,7 @@ import com.sirfootball.android.ui.root.AddTeamPage
 import com.sirfootball.android.ui.root.LockerRoomPage
 import com.sirfootball.android.ui.root.StubPage
 import com.sirfootball.android.ui.team.LeagueHomePage
+import com.sirfootball.android.ui.team.PreviewPage
 import com.sirfootball.android.ui.team.TeamHomePage
 
 
@@ -105,6 +106,16 @@ private fun MainScreenNavigationConfigurations(
                     navArgument(TeamRoutes.ARG_LEAGUE_ID) { type = NavType.IntType})) {
                     val leagueIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_LEAGUE_ID) ?: -1
                     LeagueHomePage(navController = navController, leagueId = leagueIdArgIn)
+                }
+                composable(route = TeamRoutes.PREVIEW, arguments = listOf(
+                    navArgument(TeamRoutes.ARG_LEAGUE_ID) { type = NavType.IntType},
+                    navArgument(TeamRoutes.ARG_WEEK_NUM) { type = NavType.IntType},
+                    navArgument(TeamRoutes.ARG_MATCHUP_NUM) { type = NavType.IntType})) {
+                    val leagueIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_LEAGUE_ID) ?: -1
+                    val weekArgIn = it.arguments?.getInt(TeamRoutes.ARG_WEEK_NUM) ?: -1
+                    val matchupArgIn = it.arguments?.getInt(TeamRoutes.ARG_MATCHUP_NUM) ?: -1
+                    PreviewPage(leagueId = leagueIdArgIn,
+                        weekNum = weekArgIn, matchupNum = matchupArgIn)
                 }
 
             }

@@ -72,6 +72,39 @@ fun TeamHomePage(navController: NavHostController, teamId : Int) {
                 Divider(modifier = Modifier.padding(vertical = 8.dp))
                 Text(text = "Team Tools & Options:", fontSize = 17.sp, fontStyle = FontStyle.Italic,
                     modifier = Modifier.padding(vertical = 8.dp))
+                if (responseData.weekNum > 0) {
+                    if (responseData.gameLive) {
+                        // Show scorecard
+                        ElevatedButton(contentPadding = PaddingValues(all = 8.dp),
+                            modifier = Modifier.size(width = 360.dp, height = 34.dp),
+                            onClick = {
+                                navController.navigate(
+                                    TeamRoutes.SCORECARD.replace(TeamRoutes.ARG_TAG_LEAGUE_ID, teamInfo.league_id.toString())
+                                        .replace(TeamRoutes.ARG_TAG_WEEK_NUM, responseData.weekNum.toString())
+                                        .replace(TeamRoutes.ARG_TAG_MATCHUP_NUM, responseData.matchupNum.toString())
+                                )
+                            }
+                        ) {
+                            Text("Matchup: ${responseData.matchupSummary}", fontSize = 16.sp)
+                        }
+                    } else {
+                        // Show matchup preview
+                        ElevatedButton(contentPadding = PaddingValues(all = 8.dp),
+                            modifier = Modifier.size(width = 360.dp, height = 34.dp),
+                            onClick = {
+                                navController.navigate(
+                                    TeamRoutes.PREVIEW.replace(TeamRoutes.ARG_TAG_LEAGUE_ID, teamInfo.league_id.toString())
+                                        .replace(TeamRoutes.ARG_TAG_WEEK_NUM, responseData.weekNum.toString())
+                                        .replace(TeamRoutes.ARG_TAG_MATCHUP_NUM, responseData.matchupNum.toString())
+                                )
+                            }
+                        ) {
+                            Text("Matchup: ${responseData.matchupSummary}", fontSize = 16.sp)
+                        }
+                    }
+
+                } // end > week 0
+                Text(" ", fontSize = 4.sp)
                 ElevatedButton(contentPadding = PaddingValues(all = 8.dp),
                     modifier = Modifier.size(width = 360.dp, height = 34.dp),
                     onClick = {
