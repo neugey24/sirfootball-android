@@ -5,36 +5,37 @@ data class LoadScorecardResponse (
     val detail: String,
 
     val scorecard: ScorecardData,
-    val gamesByNflTeam: Map<String, ScheduledGameData>
+    val gamesByNflTeam: Map<String, ScheduledGameData>,
+    val gameAbbrev: String
 )
 
 data class ScorecardData (
     val generatedTime: Int,
     val teamInfo: ScorecardTeamInfo,
-    val oppInfo: ScorecardTeamInfo,
+    val oppInfo: ScorecardTeamInfo?,
     val teamScorecard: TeamScorecard,
-    val oppScorecard: TeamScorecard?,
+    var oppScorecard: TeamScorecard?,
     val weekNum: Int?,
     val matchupTitle: String?
 )
 
 data class TeamScorecard (
-    val teamSubTotal: Double,
-    val teamGrandTotal: Double,
-    val slots: Map<String, ScorecardSlot>?,
-    val modifiers: String?,
-    val doubleDown: DoubleDown?,
-    val spells: TeamSpellInfo?,
-    val pickEm: PickEmData,
-    val pennant: PennantData,
-    val topDogSlot: String?,
-    val unsungHero: UnsungHeroForTeam?,
-    val special: WeeklySpecialData?,
+    val teamSubTotal: Double = 0.0,
+    val teamGrandTotal: Double = 0.0,
+    val slots: Map<String, ScorecardSlot>? = emptyMap(),
+    val modifiers: List<String>? = emptyList(),
+    val doubleDown: DoubleDown? = null,
+    val spells: TeamSpellInfo? = null,
+    val pickEm: PickEmData? = null,
+    val pennant: PennantData? = null,
+    val topDogSlot: String? = "",
+    val unsungHero: UnsungHeroForTeam? = null,
+    val special: WeeklySpecialData? = null,
 
-    val tiebreak: Int?,
-    val tiebreakType: String?,
-    val tiebreakAmount: Int?,
-    val teamBingoPoints: Int?
+    val tiebreak: Int? = -1,
+    val tiebreakType: String? = "",
+    val tiebreakAmount: Int? = -1,
+    val teamBingoPoints: Int? = -1
 )
 
 data class ScorecardSlot (
@@ -43,24 +44,24 @@ data class ScorecardSlot (
 )
 
 data class ScorecardPlayerInfo (
-    val id: Int,
-    val pos: String?,
-    val bye: Int,
-    val team: String?,
-    val team_city: String?,
-    val team_name: String?,
-    val jerseyNum: Int?,
-    val fullName: String,
-    val shortName: String
+    val id: Int = -1,
+    val pos: String? = "",
+    val bye: Int = -1,
+    val team: String? = "",
+    val team_city: String? = "",
+    val team_name: String? = "",
+    val jerseyNum: Int? = -1,
+    val fullName: String = "",
+    val shortName: String = ""
 )
 
 data class ScorecardStat (
-    val playerSubTotal: Double,
-    val playerGrandTotal: Double,
-    val checksum: Int,
-    val unsungHero: Boolean?,
-    val statSet: Map<String, StatRecord>,
-    val modifiers: List<String>?
+    val playerSubTotal: Double = 0.0,
+    val playerGrandTotal: Double = 0.0,
+    val checksum: Long = 0,
+    val unsungHero: Boolean? = false,
+    val statSet: Map<String, StatRecord>? = emptyMap(),
+    val modifiers: List<String>? = emptyList()
 )
 
 data class StatRecord (
@@ -75,44 +76,45 @@ data class StatRecord (
 )
 
 data class ScorecardTeamInfo (
-    val team_id :Int,
-    val league_id :Int,
-    val division_num :Int,
-    val team_num :Int,
-    val team_city :String,
-    val team_name :String,
-    val team_abbrev :String,
-    val team_status :String,
-    val owner_user_id :Int?,
-    val team_type :String,
-    val creation_date :String,
-    val modified_date :String,
-    val curr_wins :Int,
-    val curr_losses :Int,
-    val curr_pts_for :String,
-    val curr_pts_against :String,
-    val eliminated :Int,
-    val game_data_json :String?,
-    val postseason_seed :Int,
-    val championship_winner :Int,
-    val po_seed_1 :Int,
-    val po_seed_2 :Int,
-    val avatar_key :String?,
-    val competition_type :String?,
-    val scoring_type :String,
-    val league_type :String,
-    val league_status :String,
-    val draft_status :String,
-    val draft_date :String?,
-    val league_game_data_json :String?
+    val team_id :Int = -1,
+    val league_id :Int = -1,
+    val division_num :Int = -1,
+    val team_num :Int = -1,
+    val team_city :String = "",
+    val team_name :String = "",
+    val team_abbrev :String = "",
+    val team_status :String = "",
+    val owner_user_id :Int? = -1,
+    val team_type :String = "",
+    val creation_date :String = "",
+    val modified_date :String = "",
+    val curr_wins :Int = -1,
+    val curr_losses :Int = -1,
+    val curr_pts_for :String = "",
+    val curr_pts_against :String = "",
+    val eliminated :Int = -1,
+    val game_data_json :String? = "",
+    val postseason_seed :Int = -1,
+    val championship_winner :Int = -1,
+    val po_seed_1 :Int = -1,
+    val po_seed_2 :Int = -1,
+    val avatar_key :String? = "",
+    val competition_type :String? = "",
+    val scoring_type :String = "",
+    val league_name: String = "",
+    val league_type :String = "",
+    val league_status :String = "",
+    val draft_status :String = "",
+    val draft_date :String? = "",
+    val league_game_data_json :String? = ""
 )
 
 data class ModifierType (
-    val type: String,
-    val math: String?,
-    val stat: String,
-    val slot: String,
-    val amount: Double
+    val type: String = "",
+    val math: String? = "",
+    val stat: String = "",
+    val slot: String = "",
+    val amount: Double = 0.0
 )
 
 // Game Mode types
@@ -145,13 +147,13 @@ data class PickEmMatchup (
 )
 
 data class PennantData (
-    val color: String,
-    val name: String,
-    val type: String,
-    val image: String,
-    val detail: String,
-    val key: String,
-    val modifier: ModifierType
+    val color: String = "",
+    val name: String = "",
+    val type: String = "",
+    val image: String = "",
+    val detail: String = "",
+    val key: String = "",
+    val modifier: ModifierType = ModifierType()
 )
 
 data class UnsungHeroForTeam (

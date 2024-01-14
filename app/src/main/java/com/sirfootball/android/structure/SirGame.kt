@@ -1,5 +1,7 @@
 package com.sirfootball.android.structure
 
+import androidx.compose.runtime.Composable
+
 class SirGame private constructor() {
 
     companion object {
@@ -55,6 +57,39 @@ class SirGame private constructor() {
         val GAME_DATA = mapOf("BB" to BB_DATA, "BC" to BC_DATA, "DG" to DG_DATA,  "DD1" to DD1_DATA, "DD2" to DD2_DATA,
             "GV" to GV_DATA, "PD" to PD_DATA, "PP" to PP_DATA, "SL" to SL_DATA, "SS" to SS_DATA, "TD" to TD_DATA,
             "UH" to UH_DATA, "WS" to WS_DATA )
+
+        val ALL_STATS = listOf(
+            "passTD",
+            "passInt",
+            "passYards",
+            "pass2pt",
+            "rushTD",
+            "rushYards",
+            "rush2pt",
+            "rushLong",
+            "recTgt",
+            "recYards",
+            "recRec",
+            "recTD",
+            "rec2pt",
+            "recLong",
+            "fumLost",
+            "patConversions",
+            "fgUnder50Conversions",
+            "fg50PlusConversions",
+            "dfstSacks",
+            "dfstFumbRecov",
+            "dfstInt",
+            "dfstTD",
+            "dfstPA",
+            "dfstSafeties"
+        )
+
+        @Composable
+        fun formatScoreForGame(scoreIn: Double?, gameAbbrevIn: String) : String {
+            val formatScale = SirGame.GAME_DATA[gameAbbrevIn]?.get("scoreDecimalPlaces") ?: 2
+            return "%.${formatScale}f".format(scoreIn)
+        }
 
 
     }

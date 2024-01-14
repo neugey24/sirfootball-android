@@ -281,13 +281,24 @@ fun RenderTeamPreviewBlock(teamInfo: PreviewTeamInfo, slots: Map<String, Preview
                             fontSize = 14.sp
                         )
                         if (slotData.player != null) {
-                            Text(
-                                textAlign = TextAlign.Center,
-                                text = "${slotData.player.fullName} ${slotData.player.team} #${slotData.player.jerseyNum}",
-                                color = Color.White,
-                                modifier = Modifier.width(slotWidths[1]),
-                                fontSize = 12.sp
-                            )
+                            if (slotData.player.pos == "DFST") {
+                                Text(
+                                    textAlign = TextAlign.Center,
+                                    text = slotData.player.fullName,
+                                    color = Color.White,
+                                    modifier = Modifier.width(slotWidths[1]),
+                                    fontSize = 12.sp
+                                )
+                            } else {
+                                Text(
+                                    textAlign = TextAlign.Center,
+                                    text = "${slotData.player.fullName} ${slotData.player.team} #${slotData.player.jerseyNum}",
+                                    color = Color.White,
+                                    modifier = Modifier.width(slotWidths[1]),
+                                    fontSize = 12.sp
+                                )
+                            }
+
                         } else {
                             Text(
                                 textAlign = TextAlign.Center,

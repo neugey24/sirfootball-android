@@ -18,8 +18,9 @@ interface AppService {
 
     companion object {
         const val APP_SECRET = "e68b7621452fc41e7295cfc976d411a9"
-        //const val APP_USER_TOKEN = "ac15fa680b51f84de47cd0a6f81d1d31" // Stan
-        const val APP_USER_TOKEN = "811c10051732f76384a1ac80face89fc" // Kyle
+        const val APP_USER_TOKEN = "ac15fa680b51f84de47cd0a6f81d1d31" // Stan
+        //const val APP_USER_TOKEN = "811c10051732f76384a1ac80face89fc" // Kyle
+        //const val APP_USER_TOKEN = "c376416ee1a3bd63f762174dec276a81" // Eric Cartman
     }
 
     @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
