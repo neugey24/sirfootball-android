@@ -29,6 +29,8 @@ import com.sirfootball.android.ui.team.LeagueHomePage
 import com.sirfootball.android.ui.team.PreviewPage
 import com.sirfootball.android.ui.team.ScorecardPage
 import com.sirfootball.android.ui.team.TeamHomePage
+import com.sirfootball.android.ui.team.TeamRosterPage
+import com.sirfootball.android.ui.team.detail.PlayerInfoPage
 
 
 @Composable
@@ -127,6 +129,25 @@ private fun MainScreenNavigationConfigurations(
                     val matchupArgIn = it.arguments?.getInt(TeamRoutes.ARG_MATCHUP_NUM) ?: -1
                     ScorecardPage(leagueId = leagueIdArgIn,
                         weekNum = weekArgIn, matchupNum = matchupArgIn)
+                }
+                composable(route = TeamRoutes.TEAM_ROSTER, arguments = listOf(
+                    navArgument(TeamRoutes.ARG_TEAM_ID) { type = NavType.IntType})) {
+                    val teamIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_TEAM_ID) ?: -1
+                    TeamRosterPage(navController = navController, teamId = teamIdArgIn)
+                }
+
+                navigation(startDestination = TeamRoutes.TEAM_ROSTER, route = "teamRosterStub") {
+                    composable(route = TeamRoutes.TEAM_ROSTER, arguments = listOf(
+                        navArgument(TeamRoutes.ARG_TEAM_ID) { type = NavType.IntType})) {
+                        val teamIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_TEAM_ID) ?: -1
+                        TeamRosterPage(navController = navController, teamId = teamIdArgIn)
+                    }
+
+                    composable(route = TeamRoutes.PLAYER_INFO, arguments = listOf(
+                        navArgument(TeamRoutes.ARG_PLAYER_ID) { type = NavType.IntType})) {
+                        val playerIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_PLAYER_ID) ?: -1
+                        PlayerInfoPage(playerId = playerIdArgIn)
+                    }
                 }
 
             }

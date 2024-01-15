@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="panel_bg">#ECD9BD</color>
+    <color name="panel_action_bg">#DCC9AD</color>
     <color name="panel_fg">#0E319B</color>
     <color name="score_team_bg">#DD0000</color>
     <color name="score_opp_bg">#5190F3</color>

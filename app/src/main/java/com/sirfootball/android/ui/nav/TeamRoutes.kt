@@ -11,6 +11,9 @@ class TeamRoutes private constructor() {
         const val ARG_LEAGUE_ID = "leagueId"
         const val ARG_TAG_LEAGUE_ID = "{$ARG_LEAGUE_ID}"
 
+        const val ARG_PLAYER_ID = "playerId"
+        const val ARG_TAG_PLAYER_ID = "{$ARG_PLAYER_ID}"
+
         const val LEAGUE_HOME = "league/$ARG_TAG_LEAGUE_ID"
 
         const val ARG_WEEK_NUM = "weekNum"
@@ -22,6 +25,10 @@ class TeamRoutes private constructor() {
         const val PREVIEW = "preview/$ARG_TAG_LEAGUE_ID/$ARG_TAG_WEEK_NUM/$ARG_TAG_MATCHUP_NUM"
 
         const val SCORECARD = "scorecard/$ARG_TAG_LEAGUE_ID/$ARG_TAG_WEEK_NUM/$ARG_TAG_MATCHUP_NUM"
+
+        const val TEAM_ROSTER = "roster/$ARG_TAG_TEAM_ID"
+
+        const val PLAYER_INFO = "player/$ARG_TAG_PLAYER_ID"
 
     }
 }

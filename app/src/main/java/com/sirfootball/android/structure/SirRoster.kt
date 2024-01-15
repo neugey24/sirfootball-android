@@ -37,9 +37,12 @@ class SirRoster private constructor() {
             return "LIVE"
         }
 
-        @Composable
+        //@Composable
         fun getStartingSlots() : List<String> {
             return listOf("QB1", "RB1", "RB2", "WR1", "WR2", "TE1", "FLEX", "K1", "DFST1")
+        }
+        fun getBenchSlots() : List<String> {
+            return listOf("B1", "B2", "B3", "B4", "B5", "B6")
         }
 
         @Composable

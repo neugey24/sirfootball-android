@@ -420,8 +420,7 @@ fun RenderTeamScorecardBlock(gameAbbrev: String,
         "${teamInfo.team_city} ${teamInfo.team_name} (${teamInfo.team_abbrev}) - $rosterType",
         fontSize = 14.sp
     )
-    val displaySlots = if (renderBench) arrayOf("B1", "B2", "B3", "B4", "B5", "B6")
-        else arrayOf("QB1", "RB1", "RB2", "WR1", "WR2", "TE1", "FLEX", "K1", "DFST1")
+    val displaySlots = if (renderBench) SirRoster.getBenchSlots() else SirRoster.getStartingSlots()
 
         val slotMap = card.slots ?: emptyMap()
         val slotWidths = arrayOf(45.dp, 150.dp, 40.dp, 75.dp, 20.dp)

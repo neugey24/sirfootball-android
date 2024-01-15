@@ -41,7 +41,8 @@ fun TeamHomePage(navController: NavHostController, teamId : Int) {
 
     when (loadState) {
         is ApiState.Loading -> {
-            Text("Loading Data ...")
+            Text(" ", fontSize = 70.sp)
+            Text("Loading Data ...", fontSize = 30.sp)
         }
 
         is ApiState.Success -> {
@@ -72,6 +73,16 @@ fun TeamHomePage(navController: NavHostController, teamId : Int) {
                 Divider(modifier = Modifier.padding(vertical = 8.dp))
                 Text(text = "Team Tools & Options:", fontSize = 17.sp, fontStyle = FontStyle.Italic,
                     modifier = Modifier.padding(vertical = 8.dp))
+                ElevatedButton(contentPadding = PaddingValues(all = 8.dp),
+                    modifier = Modifier.size(width = 360.dp, height = 34.dp),
+                    onClick = {
+                        navController.navigate(
+                            TeamRoutes.TEAM_ROSTER.replace(TeamRoutes.ARG_TAG_TEAM_ID, teamInfo.team_id.toString())
+                        )
+                    }
+                ) {
+                    Text("Manage Team Roster", fontSize = 16.sp)
+                }
                 if (responseData.weekNum > 0) {
                     if (responseData.gameLive) {
                         // Show scorecard

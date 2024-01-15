@@ -2,10 +2,12 @@ package com.sirfootball.android.data.api
 
 import com.sirfootball.android.data.model.GeneralPersistenceResponse
 import com.sirfootball.android.data.model.GetLeagueInfoResponse
+import com.sirfootball.android.data.model.GetPlayerInfoResponse
 import com.sirfootball.android.data.model.GetTeamInfoResponse
 import com.sirfootball.android.data.model.LoadJoinLeagueListResponse
 import com.sirfootball.android.data.model.LoadPreviewResponse
 import com.sirfootball.android.data.model.LoadScorecardResponse
+import com.sirfootball.android.data.model.LoadTeamRosterResponse
 import com.sirfootball.android.data.model.LoadUserTeamsResponse
 import com.sirfootball.android.data.model.NewTeamFormData
 import retrofit2.http.Body
@@ -34,6 +36,14 @@ interface AppService {
     @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
     @GET("getTeamInfo/{teamId}")
     suspend fun getTeamInfo(@Path("teamId") teamId : Int): GetTeamInfoResponse
+
+    @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
+    @GET("getPlayerInfo/{playerId}")
+    suspend fun getPlayerInfo(@Path("playerId") playerId : Int): GetPlayerInfoResponse
+
+    @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
+    @GET("getTeamRoster/{teamId}")
+    suspend fun getTeamRoster(@Path("teamId") teamId : Int): LoadTeamRosterResponse
 
     @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
     @GET("getLeagueInfo/{leagueId}")
