@@ -4,9 +4,11 @@ import com.sirfootball.android.data.model.GeneralPersistenceResponse
 import com.sirfootball.android.data.model.GetLeagueInfoResponse
 import com.sirfootball.android.data.model.GetPlayerInfoResponse
 import com.sirfootball.android.data.model.GetTeamInfoResponse
+import com.sirfootball.android.data.model.LoadAddSlotGatherResponse
 import com.sirfootball.android.data.model.LoadJoinLeagueListResponse
 import com.sirfootball.android.data.model.LoadPreviewResponse
 import com.sirfootball.android.data.model.LoadScorecardResponse
+import com.sirfootball.android.data.model.LoadTeamAddPlayerResponse
 import com.sirfootball.android.data.model.LoadTeamRosterResponse
 import com.sirfootball.android.data.model.LoadUserTeamsResponse
 import com.sirfootball.android.data.model.NewTeamFormData
@@ -62,11 +64,43 @@ interface AppService {
                            @Path("matchupNum") matchupNum : Int): LoadScorecardResponse
 
     @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
+    @GET("teamAddPlayerData/{teamId}/{slotName}/{isDr}/{requestPos}")
+    suspend fun teamAddPlayerData(@Path("teamId") teamId : Int,
+                             @Path("slotName") slotName : String,
+                              @Path("isDr") isDr : String,
+                              @Path("requestPos") requestPos : String): LoadTeamAddPlayerResponse
+
+    @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
+    @GET("addSelectSlotGather/{teamId}/{playerId}")
+    suspend fun addSelectSlotGather(@Path("teamId") teamId : Int,
+                                  @Path("playerId") playerId : Int): LoadAddSlotGatherResponse
+
+    @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
     @POST("joinLeague/{leagueId}")
     suspend fun joinLeague(@Path("leagueId") leagueId : Int, @Body postData : NewTeamFormData): GeneralPersistenceResponse
 
     @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
     @GET("claimTeam/{leagueId}")
     suspend fun claimTeam(@Path("leagueId") leagueId : Int): GeneralPersistenceResponse
+
+    @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
+    @GET("performSlotSwap/{teamId}/{slot1}/{slot2}")
+    suspend fun performSlotSwap(@Path("teamId") teamId : Int,
+                                @Path("slot1") slot1 : String,
+                                @Path("slot2") slot2 : String): GeneralPersistenceResponse
+
+    @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
+    @GET("dropTeamPlayer/{teamId}/{dropSlot}")
+    suspend fun dropTeamPlayer(@Path("teamId") teamId : Int,
+                                @Path("dropSlot") dropSlot : String): GeneralPersistenceResponse
+
+    @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
+    @GET("teamAddPerformExecute/{teamId}/{playerId}/{slotName}/{onWaivers}")
+    suspend fun teamAddPerformExecute(@Path("teamId") teamId : Int,
+                                      @Path("playerId") playerId : Int,
+                                @Path("slotName") slotName : String,
+                                @Path("onWaivers") onWaivers : String): GeneralPersistenceResponse
+
+
 
 }

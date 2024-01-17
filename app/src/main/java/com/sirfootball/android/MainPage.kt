@@ -29,6 +29,8 @@ import com.sirfootball.android.ui.team.LeagueHomePage
 import com.sirfootball.android.ui.team.PreviewPage
 import com.sirfootball.android.ui.team.ScorecardPage
 import com.sirfootball.android.ui.team.TeamHomePage
+import com.sirfootball.android.ui.team.TeamRosterAddPage
+import com.sirfootball.android.ui.team.TeamRosterAddSlotPage
 import com.sirfootball.android.ui.team.TeamRosterPage
 import com.sirfootball.android.ui.team.detail.PlayerInfoPage
 
@@ -148,6 +150,50 @@ private fun MainScreenNavigationConfigurations(
                         val playerIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_PLAYER_ID) ?: -1
                         PlayerInfoPage(playerId = playerIdArgIn)
                     }
+
+                    composable(route = TeamRoutes.TEAM_ROSTER_ADD, arguments = listOf(
+                        navArgument(TeamRoutes.ARG_TEAM_ID) { type = NavType.IntType},
+                        navArgument(TeamRoutes.ARG_SLOT_NAME) { type = NavType.StringType},
+                        navArgument(TeamRoutes.ARG_IS_DR) { type = NavType.StringType},
+                        navArgument(TeamRoutes.ARG_REQUEST_POS) { type = NavType.StringType}
+                        )) {
+                        val teamIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_TEAM_ID) ?: -1
+                        val slotNameArgIn = it.arguments?.getString(TeamRoutes.ARG_SLOT_NAME) ?: "UNK"
+                        val isDrArgIn = it.arguments?.getString(TeamRoutes.ARG_IS_DR) ?: "UNK"
+                        val requestPosArgIn = it.arguments?.getString(TeamRoutes.ARG_REQUEST_POS) ?: "UNK"
+                        TeamRosterAddPage(navController = navController, teamId = teamIdArgIn, slotName = slotNameArgIn, isDr = isDrArgIn,
+                            requestPos = requestPosArgIn)
+                    }
+
+                    navigation(startDestination = TeamRoutes.TEAM_ROSTER_ADD, route = "teamRosterAddStub") {
+
+                        composable(route = TeamRoutes.TEAM_ROSTER_ADD, arguments = listOf(
+                            navArgument(TeamRoutes.ARG_TEAM_ID) { type = NavType.IntType},
+                            navArgument(TeamRoutes.ARG_SLOT_NAME) { type = NavType.StringType},
+                            navArgument(TeamRoutes.ARG_IS_DR) { type = NavType.StringType},
+                            navArgument(TeamRoutes.ARG_REQUEST_POS) { type = NavType.StringType}
+                        )) {
+                            val teamIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_TEAM_ID) ?: -1
+                            val slotNameArgIn = it.arguments?.getString(TeamRoutes.ARG_SLOT_NAME) ?: "UNK"
+                            val isDrArgIn = it.arguments?.getString(TeamRoutes.ARG_IS_DR) ?: "UNK"
+                            val requestPosArgIn = it.arguments?.getString(TeamRoutes.ARG_REQUEST_POS) ?: "UNK"
+                            TeamRosterAddPage(navController = navController, teamId = teamIdArgIn, slotName = slotNameArgIn, isDr = isDrArgIn,
+                                requestPos = requestPosArgIn)
+                        }
+
+                        composable(route = TeamRoutes.TEAM_ROSTER_ADD_SLOT, arguments = listOf(
+                            navArgument(TeamRoutes.ARG_TEAM_ID) { type = NavType.IntType},
+                            navArgument(TeamRoutes.ARG_PLAYER_ID) { type = NavType.IntType})) {
+                            val teamIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_TEAM_ID) ?: -1
+                            val playerIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_PLAYER_ID) ?: -1
+                            val onWaiversArgIn = it.arguments?.getString(TeamRoutes.ARG_ON_WAIVERS) ?: -1
+                            TeamRosterAddSlotPage(navController, teamId = teamIdArgIn, playerId = playerIdArgIn,
+                                onWaivers = onWaiversArgIn.toString())
+
+                        }
+
+                    }
+
                 }
 
             }

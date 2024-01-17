@@ -48,4 +48,44 @@ class DataPersistenceViewModel @Inject constructor(private val apiService: AppSe
             }
         }
     }
+
+    fun performRosterSwap(teamId: Int, slot1: String, slot2: String) {
+        viewModelScope.launch {
+            try {
+                val response = apiService.performSlotSwap(teamId = teamId, slot1 = slot1, slot2 = slot2)
+                _response.value = ApiState.Success(response)
+            } catch (e: Exception) {
+                val errorMessage = "error during swap slot on team"
+                Log.e("API_ERROR", errorMessage, e)
+                _response.value = ApiState.Error(errorMessage)
+            }
+        }
+    }
+
+    fun dropTeamPlayer(teamId: Int, dropSlot: String) {
+        viewModelScope.launch {
+            try {
+                val response = apiService.dropTeamPlayer(teamId = teamId, dropSlot = dropSlot)
+                _response.value = ApiState.Success(response)
+            } catch (e: Exception) {
+                val errorMessage = "error during drop of player from team"
+                Log.e("API_ERROR", errorMessage, e)
+                _response.value = ApiState.Error(errorMessage)
+            }
+        }
+    }
+
+    fun teamAddPerformExecute(teamId: Int, playerId: Int, slotName: String, onWaivers: String) {
+        viewModelScope.launch {
+            try {
+                val response = apiService.teamAddPerformExecute(teamId = teamId, playerId = playerId,
+                    slotName = slotName, onWaivers = onWaivers)
+                _response.value = ApiState.Success(response)
+            } catch (e: Exception) {
+                val errorMessage = "error during perform add of player"
+                Log.e("API_ERROR", errorMessage, e)
+                _response.value = ApiState.Error(errorMessage)
+            }
+        }
+    }
 }

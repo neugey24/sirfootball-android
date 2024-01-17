@@ -1,5 +1,6 @@
 package com.sirfootball.android.ui.team
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -15,10 +16,13 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ModalBottomSheet
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -48,6 +52,9 @@ import com.sirfootball.android.structure.SirAvatar
 import com.sirfootball.android.structure.SirGame
 import com.sirfootball.android.structure.SirRoster
 import com.sirfootball.android.ui.nav.TeamRoutes
+import com.sirfootball.android.ui.team.detail.ScorecardPlayerDetail
+import com.sirfootball.android.ui.team.detail.ScorecardTeamDetail
+import com.sirfootball.android.ui.team.detail.TeamRosterActionDetail
 import com.sirfootball.android.viewmodel.GetTeamInfoViewModel
 import com.sirfootball.android.viewmodel.GetTeamRosterViewModel
 
@@ -59,14 +66,25 @@ fun TeamRosterPage(navController: NavHostController, teamId : Int) {
 
     val sheetUp = rememberModalBottomSheetState(skipPartiallyExpanded = true)
     var showBottomSheet by remember { mutableStateOf(false) }
+    var updateNeeded by remember { mutableStateOf(false) }
+    var showSheetForSlot by remember { mutableStateOf(RosterSlotInfo()) }
 
     LaunchedEffect(Unit) {
         viewModel.fetch(teamId)
     }
 
+    when(updateNeeded) {
+        true -> { updateNeeded = false
+                viewModel.fetch(teamId)
+                Log.i("Roster", "show me sheet state: $showBottomSheet")
+             }
+        false -> Log.i("Roster", "Update not needed")
+    }
+
     when (loadState) {
         is ApiState.Loading -> {
             Text("Loading Data ...")
+
         }
 
         is ApiState.Success -> {
@@ -104,11 +122,21 @@ fun TeamRosterPage(navController: NavHostController, teamId : Int) {
                         modifier = Modifier.padding(vertical = 8.dp)
                     )
                     Spacer(Modifier.weight(1f))
-                    ElevatedButton(contentPadding = PaddingValues(all = 8.dp),
+                    Button(contentPadding = PaddingValues(all = 1.dp),
+                        modifier = Modifier.height(24.dp).width(82.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.Blue,
+                            contentColor = Color.White),
                         onClick = {
+                            navController.navigate(
+                                TeamRoutes.TEAM_ROSTER_ADD.replace(
+                                    TeamRoutes.ARG_TAG_TEAM_ID, teamId.toString())
+                                    .replace(TeamRoutes.ARG_TAG_SLOT_NAME, "UNK")
+                                    .replace(TeamRoutes.ARG_TAG_IS_DR, "N")
+                                    .replace(TeamRoutes.ARG_TAG_REQUEST_POS, "N")
+                            )
                         }
                     ) {
-                        Text(" Add Player ", fontSize = 18.sp)
+                        Text(" Add Player ", fontSize = 15.sp)
                     }
                 }
                 LazyColumn(
@@ -123,9 +151,11 @@ fun TeamRosterPage(navController: NavHostController, teamId : Int) {
                     for (currentSlot in SirRoster.getStartingSlots()) {
                         item {
                             RenderTeamRosterSlot(
+                                teamId,
                                 navController,
                                 currentSlot, roster.info,
                                 sheetValueChange = { showBottomSheet = it },
+                                sheetValueSlot = { showSheetForSlot = it}
                             )
                         }
                     }
@@ -135,10 +165,12 @@ fun TeamRosterPage(navController: NavHostController, teamId : Int) {
                     for (currentSlot in SirRoster.getBenchSlots()) {
                         item {
                             RenderTeamRosterSlot(
+                                teamId,
                                 navController,
                                 currentSlot,
                                 roster.info,
                                 sheetValueChange = { showBottomSheet = it },
+                                sheetValueSlot = { showSheetForSlot = it}
                             )
                         }
                     }
@@ -151,13 +183,29 @@ fun TeamRosterPage(navController: NavHostController, teamId : Int) {
             val error = loadState.toString()
             Text("Error loading team Occurred: $error")
         }
+
+    }
+
+    if (showBottomSheet) {
+        ModalBottomSheet(
+            containerColor = colorResource(R.color.panel_bg),
+            contentColor = colorResource(R.color.panel_fg),
+            onDismissRequest = {
+                showBottomSheet = false
+            },
+            sheetState = sheetUp
+        ) {
+            TeamRosterActionDetail(teamId = teamId, forSlot = showSheetForSlot,
+                sheetValueChange = {showBottomSheet = it}, updateNeeded = {updateNeeded = it})
+        }
     }
 
 }
 
 @Composable
-private fun RenderTeamRosterSlot(navController: NavHostController, currentSlot: String, info: TeamRosterInfo,
-                                 sheetValueChange: (Boolean) -> Unit                           ) {
+private fun RenderTeamRosterSlot(teamId: Int, navController: NavHostController, currentSlot: String, info: TeamRosterInfo,
+                                 sheetValueChange: (Boolean) -> Unit ,
+                                 sheetValueSlot: (RosterSlotInfo) -> Unit) {
     val slotData = info.slots[currentSlot]
     // First Row - Slot/Name/Caliber/Points
     Row(
@@ -241,14 +289,7 @@ private fun RenderTeamRosterSlot(navController: NavHostController, currentSlot: 
                 vertical = 2.dp,
             )
     ) {
-        if (slotData?.slotPlayer == null) {
-            ElevatedButton(contentPadding = PaddingValues(all = 8.dp),
-                onClick = {
-                }
-            ) {
-                Text(" Add Player ", fontSize = 15.sp)
-            }
-        } else {
+        if (slotData?.slotPlayer != null) {
             Text(
                 textAlign = TextAlign.Center,
                 text = " Bye: ${slotData.slotPlayer.byeWeek} ",
@@ -265,8 +306,9 @@ private fun RenderTeamRosterSlot(navController: NavHostController, currentSlot: 
                 modifier = Modifier.width(180.dp),
                 fontSize = 13.sp
             )
+        } else {
+            Text(" ", fontSize = 13.sp)
         }
-
 
     }
 
@@ -282,7 +324,26 @@ private fun RenderTeamRosterSlot(navController: NavHostController, currentSlot: 
             )
     ) {
         if (slotData?.slotPlayer == null) {
-            Text(" ", fontSize = 16.sp)
+            Row {
+                Spacer(Modifier.weight(1f))
+                Button(
+                    contentPadding = PaddingValues(all = 1.dp),
+                    modifier = Modifier.height(24.dp).width(82.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Blue,
+                        contentColor = Color.White),
+                    onClick = {
+                        navController.navigate(
+                            TeamRoutes.TEAM_ROSTER_ADD.replace(
+                                TeamRoutes.ARG_TAG_TEAM_ID, teamId.toString())
+                                .replace(TeamRoutes.ARG_TAG_SLOT_NAME, slotData?.slotName ?: "UNK")
+                                .replace(TeamRoutes.ARG_TAG_IS_DR, "N")
+                                .replace(TeamRoutes.ARG_TAG_REQUEST_POS, "N")
+                        )
+                    },
+                ) {
+                    Text("Add Player", fontSize = 14.sp )
+                }
+            }
         } else {
             Icon(
                 painter = painterResource(id = R.drawable.ic_info_black_24dp),
@@ -299,7 +360,8 @@ private fun RenderTeamRosterSlot(navController: NavHostController, currentSlot: 
                     contentDescription = "Player Info - Injury",
                     tint = Color.Red,
                     modifier = Modifier.size(20.dp).clickable(onClick = {
-
+                        navController.navigate(
+                            TeamRoutes.PLAYER_INFO.replace(TeamRoutes.ARG_TAG_PLAYER_ID, slotData.slotPlayer.playerId.toString()))
                     })
                 )
             }
@@ -312,12 +374,30 @@ private fun RenderTeamRosterSlot(navController: NavHostController, currentSlot: 
                     modifier = Modifier.size(20.dp)
                 )
             } else {
-                 Text(" <<Actions>> ", fontSize = 16.sp, color = Color.Blue, fontWeight = FontWeight.Bold,
-                    modifier = Modifier.clickable(onClick = {}))
+                Button(
+                    contentPadding = PaddingValues(all = 1.dp),
+                    modifier = Modifier.height(24.dp).width(82.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Blue,
+                        contentColor = Color.White),
+                    onClick =  {
+                        sheetValueSlot(slotData)
+                        sheetValueChange(true)
+                    },
+                ) {
+                    Text("Actions", fontSize = 14.sp )
+                }
 
                 if (info.waiverTimeframe == "game" && (!(currentSlot.startsWith("B"))) && slotData.lockPlayerInfo == null) {
-                    Text(" <<DR>> ", fontSize = 16.sp, color = Color.Blue, fontWeight = FontWeight.Bold,
-                        modifier = Modifier.clickable(onClick = {}))
+                    Button(
+                        contentPadding = PaddingValues(all = 1.dp),
+                        modifier = Modifier.height(24.dp).width(48.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.Blue,
+                            contentColor = Color.White),
+                        onClick =  {
+                        },
+                    ) {
+                        Text("DR", fontSize = 14.sp )
+                    }
                 }
             }
 

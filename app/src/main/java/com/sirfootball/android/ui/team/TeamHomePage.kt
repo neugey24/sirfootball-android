@@ -7,8 +7,12 @@ import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Text
@@ -16,6 +20,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
@@ -73,7 +78,9 @@ fun TeamHomePage(navController: NavHostController, teamId : Int) {
                 Divider(modifier = Modifier.padding(vertical = 8.dp))
                 Text(text = "Team Tools & Options:", fontSize = 17.sp, fontStyle = FontStyle.Italic,
                     modifier = Modifier.padding(vertical = 8.dp))
-                ElevatedButton(contentPadding = PaddingValues(all = 8.dp),
+                Button(contentPadding = PaddingValues(all = 2.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Blue,
+                        contentColor = Color.White),
                     modifier = Modifier.size(width = 360.dp, height = 34.dp),
                     onClick = {
                         navController.navigate(
@@ -83,10 +90,13 @@ fun TeamHomePage(navController: NavHostController, teamId : Int) {
                 ) {
                     Text("Manage Team Roster", fontSize = 16.sp)
                 }
+                Text(" ", fontSize = 4.sp)
                 if (responseData.weekNum > 0) {
                     if (responseData.gameLive) {
                         // Show scorecard
-                        ElevatedButton(contentPadding = PaddingValues(all = 8.dp),
+                        Button(contentPadding = PaddingValues(all = 2.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = Color.Blue,
+                                contentColor = Color.White),
                             modifier = Modifier.size(width = 360.dp, height = 34.dp),
                             onClick = {
                                 navController.navigate(
@@ -100,7 +110,9 @@ fun TeamHomePage(navController: NavHostController, teamId : Int) {
                         }
                     } else {
                         // Show matchup preview
-                        ElevatedButton(contentPadding = PaddingValues(all = 8.dp),
+                        Button(contentPadding = PaddingValues(all = 2.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = Color.Blue,
+                                contentColor = Color.White),
                             modifier = Modifier.size(width = 360.dp, height = 34.dp),
                             onClick = {
                                 navController.navigate(
@@ -116,7 +128,9 @@ fun TeamHomePage(navController: NavHostController, teamId : Int) {
 
                 } // end > week 0
                 Text(" ", fontSize = 4.sp)
-                ElevatedButton(contentPadding = PaddingValues(all = 8.dp),
+                Button(contentPadding = PaddingValues(all = 2.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Blue,
+                        contentColor = Color.White),
                     modifier = Modifier.size(width = 360.dp, height = 34.dp),
                     onClick = {
                         navController.navigate(
@@ -126,7 +140,9 @@ fun TeamHomePage(navController: NavHostController, teamId : Int) {
                     Text("League: ${teamInfo.league_name}", fontSize = 16.sp)
                 }
                 Text(" ", fontSize = 8.sp)
-                ElevatedButton(contentPadding = PaddingValues(all = 8.dp),
+                Button(contentPadding = PaddingValues(all = 2.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Blue,
+                        contentColor = Color.White),
                     modifier = Modifier.size(width = 220.dp, height = 34.dp),
                     onClick = {
                     }
@@ -148,7 +164,9 @@ fun TeamHomePage(navController: NavHostController, teamId : Int) {
                     Column(modifier = Modifier.fillMaxWidth(),
                         horizontalAlignment = Alignment.CenterHorizontally) {
                         Text(text = "Team Avatar", fontSize = 22.sp)
-                        ElevatedButton(contentPadding = PaddingValues(all = 3.dp),
+                        Button(contentPadding = PaddingValues(all = 3.dp),
+                            colors = ButtonDefaults.buttonColors(containerColor = Color.Blue,
+                                contentColor = Color.White),
                             modifier = Modifier.size(width = 160.dp, height = 34.dp),
                             onClick = {
                             }

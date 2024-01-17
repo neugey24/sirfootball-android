@@ -37,7 +37,7 @@ private val LightColorScheme = lightColorScheme(
 fun SirFootballAndroidAppTheme(
     // TODO: toggle darkTheme for testing on and off
    // darkTheme: Boolean = isSystemInDarkTheme(),
-    darkTheme: Boolean = false,
+    darkTheme: Boolean = true,
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
     content: @Composable () -> Unit

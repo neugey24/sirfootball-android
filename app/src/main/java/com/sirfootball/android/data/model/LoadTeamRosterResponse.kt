@@ -16,19 +16,19 @@ data class TeamRosterInfo (
 )
 
 data class RosterSlotInfo (
-    val slotId: Int,
-    val slotName: String,
-    val slotPos: String,
-    val slotType: String,
+    val slotId: Int = -1,
+    val slotName: String = "",
+    val slotPos: String = "",
+    val slotType: String = "",
 
-    val isEmpty: Boolean,
-    val isLocked: Boolean,
-    val lockReason: String,
-    val lockPlayerInfo: LockPlayerInfo?,
-    val slotPlayer: SlotPlayer?,
-    val availableActions: List<RosterAction>,
+    val isEmpty: Boolean = false,
+    val isLocked: Boolean = false,
+    val lockReason: String = "",
+    val lockPlayerInfo: LockPlayerInfo? = null,
+    val slotPlayer: SlotPlayer? = null,
+    val availableActions: List<RosterAction> = emptyList(),
 
-    val claimInfo: WaiverClaimInfo?
+    val claimInfo: WaiverClaimInfo? = null
 )
 
 data class WaiverClaimInfo (
