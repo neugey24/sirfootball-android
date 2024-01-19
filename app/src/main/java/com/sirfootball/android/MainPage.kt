@@ -33,6 +33,11 @@ import com.sirfootball.android.ui.team.TeamRosterAddPage
 import com.sirfootball.android.ui.team.TeamRosterAddSlotPage
 import com.sirfootball.android.ui.team.TeamRosterPage
 import com.sirfootball.android.ui.team.detail.PlayerInfoPage
+import com.sirfootball.android.ui.team.detail.TeamDoubleDownPage
+import com.sirfootball.android.ui.team.detail.TeamPennantsPage
+import com.sirfootball.android.ui.team.detail.TeamPickEmPage
+import com.sirfootball.android.ui.team.detail.TeamSpellsPage
+import com.sirfootball.android.ui.team.detail.TeamWeeklySpecialPage
 
 
 @Composable
@@ -106,6 +111,31 @@ private fun MainScreenNavigationConfigurations(
                     navArgument(TeamRoutes.ARG_TEAM_ID) { type = NavType.IntType})) {
                     val teamIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_TEAM_ID) ?: -1
                     TeamHomePage(navController = navController, teamId = teamIdArgIn)
+                }
+                composable(route = TeamRoutes.TEAM_DD1_PICKS, arguments = listOf(
+                    navArgument(TeamRoutes.ARG_TEAM_ID) { type = NavType.IntType})) {
+                    val teamIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_TEAM_ID) ?: -1
+                    TeamPickEmPage(teamId = teamIdArgIn)
+                }
+                composable(route = TeamRoutes.TEAM_DD2_PICKS, arguments = listOf(
+                    navArgument(TeamRoutes.ARG_TEAM_ID) { type = NavType.IntType})) {
+                    val teamIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_TEAM_ID) ?: -1
+                    TeamDoubleDownPage(teamId = teamIdArgIn)
+                }
+                composable(route = TeamRoutes.TEAM_BC_SPELLS, arguments = listOf(
+                    navArgument(TeamRoutes.ARG_TEAM_ID) { type = NavType.IntType})) {
+                    val teamIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_TEAM_ID) ?: -1
+                    TeamSpellsPage(teamId = teamIdArgIn)
+                }
+                composable(route = TeamRoutes.TEAM_PP_SELECTIONS, arguments = listOf(
+                    navArgument(TeamRoutes.ARG_TEAM_ID) { type = NavType.IntType})) {
+                    val teamIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_TEAM_ID) ?: -1
+                    TeamPennantsPage(teamId = teamIdArgIn)
+                }
+                composable(route = TeamRoutes.TEAM_WS_SHOW, arguments = listOf(
+                    navArgument(TeamRoutes.ARG_TEAM_ID) { type = NavType.IntType})) {
+                    val teamIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_TEAM_ID) ?: -1
+                    TeamWeeklySpecialPage(teamId = teamIdArgIn)
                 }
                 composable(route = TeamRoutes.LEAGUE_HOME, arguments = listOf(
                     navArgument(TeamRoutes.ARG_LEAGUE_ID) { type = NavType.IntType})) {

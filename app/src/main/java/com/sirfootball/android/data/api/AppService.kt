@@ -9,13 +9,20 @@ import com.sirfootball.android.data.model.LoadJoinLeagueListResponse
 import com.sirfootball.android.data.model.LoadPreviewResponse
 import com.sirfootball.android.data.model.LoadScorecardResponse
 import com.sirfootball.android.data.model.LoadTeamAddPlayerResponse
+import com.sirfootball.android.data.model.LoadTeamDoubleDownResponse
+import com.sirfootball.android.data.model.LoadTeamPennantsResponse
+import com.sirfootball.android.data.model.LoadTeamPicksResponse
 import com.sirfootball.android.data.model.LoadTeamRosterResponse
+import com.sirfootball.android.data.model.LoadTeamSpellsCompositeResponse
+import com.sirfootball.android.data.model.LoadTeamSpellsResponse
+import com.sirfootball.android.data.model.LoadTeamWeeklySpecialResponse
 import com.sirfootball.android.data.model.LoadUserTeamsResponse
 import com.sirfootball.android.data.model.NewTeamFormData
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Headers
 import retrofit2.http.POST
+import retrofit2.http.PUT
 import retrofit2.http.Path
 
 interface AppService {
@@ -38,6 +45,26 @@ interface AppService {
     @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
     @GET("getTeamInfo/{teamId}")
     suspend fun getTeamInfo(@Path("teamId") teamId : Int): GetTeamInfoResponse
+
+    @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
+    @GET("game/DD1/{teamId}")
+    suspend fun getDD1Picks(@Path("teamId") teamId : Int): LoadTeamPicksResponse
+
+    @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
+    @GET("game/BC/{teamId}")
+    suspend fun getSpells(@Path("teamId") teamId : Int): LoadTeamSpellsResponse
+
+    @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
+    @GET("game/DD2/{teamId}")
+    suspend fun getDoubleDown(@Path("teamId") teamId : Int): LoadTeamDoubleDownResponse
+
+    @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
+    @GET("game/PP/{teamId}")
+    suspend fun getPennants(@Path("teamId") teamId : Int): LoadTeamPennantsResponse
+
+    @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
+    @GET("game/WS/{teamId}")
+    suspend fun getSpecial(@Path("teamId") teamId : Int): LoadTeamWeeklySpecialResponse
 
     @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
     @GET("getPlayerInfo/{playerId}")
@@ -78,6 +105,24 @@ interface AppService {
     @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
     @POST("joinLeague/{leagueId}")
     suspend fun joinLeague(@Path("leagueId") leagueId : Int, @Body postData : NewTeamFormData): GeneralPersistenceResponse
+
+    @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
+    @PUT("game/DD1/{teamId}/{homeTeamAbbrev}/{homeWin}")
+    suspend fun savePick(@Path("teamId") teamId : Int, @Path("homeTeamAbbrev") homeTeamAbbrev : String,
+                         @Path("homeWin") homeWin : String): GeneralPersistenceResponse
+
+    @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
+    @PUT("game/BC/{teamId}/{spellIndex}")
+    suspend fun saveSpell(@Path("teamId") teamId : Int, @Path("spellIndex") spellIndex : Int): GeneralPersistenceResponse
+
+    @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
+    @PUT("game/DD2/{teamId}/{playerId}/{weekNum}")
+    suspend fun saveDoubleDown(@Path("teamId") teamId : Int, @Path("playerId") playerId : Int,
+                               @Path("weekNum") weekNum : Int): GeneralPersistenceResponse
+
+    @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
+    @PUT("game/PP/{teamId}/{pennantKey}")
+    suspend fun savePennant(@Path("teamId") teamId : Int, @Path("pennantKey") pennantKey : String): GeneralPersistenceResponse
 
     @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
     @GET("claimTeam/{leagueId}")

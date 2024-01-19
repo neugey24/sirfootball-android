@@ -38,17 +38,17 @@ data class WaiverClaimInfo (
 )
 
 data class SlotPlayer (
-    val playerId: Int,
-    val position: String,
-    val shortName: String,
-    val fullName: String,
-    val teamAbbrev: String?,
-    val byeWeek: Int,
-    val caliber: Int,
-    val jerseyNum: Int?,
-    val fantasyPoints: String?,
-    val hasInjury: Boolean,
-    val gameInfo: SlotPlayerGameInfo?
+    val playerId: Int = -1,
+    val position: String = "",
+    val shortName: String = "",
+    val fullName: String = "",
+    val teamAbbrev: String? = null,
+    val byeWeek: Int = -1,
+    val caliber: Int = -1,
+    val jerseyNum: Int? = -1,
+    val fantasyPoints: String? = null,
+    val hasInjury: Boolean = false,
+    val gameInfo: SlotPlayerGameInfo? = null
 )
 
 data class SlotPlayerGameInfo (

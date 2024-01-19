@@ -88,4 +88,59 @@ class DataPersistenceViewModel @Inject constructor(private val apiService: AppSe
             }
         }
     }
+
+    fun savePick(teamId: Int, homeTeamAbbrev: String, homeWin: String) {
+        viewModelScope.launch {
+            try {
+                Log.i("save pickem", "saving it: $homeTeamAbbrev")
+                val response = apiService.savePick(teamId = teamId, homeTeamAbbrev = homeTeamAbbrev,
+                    homeWin = homeWin)
+                _response.value = ApiState.Success(response)
+            } catch (e: Exception) {
+                val errorMessage = "error during save pick em"
+                Log.e("API_ERROR", errorMessage, e)
+                _response.value = ApiState.Error(errorMessage)
+            }
+        }
+    }
+
+    fun saveSpell(teamId: Int, spellIndex: Int) {
+        viewModelScope.launch {
+            try {
+                Log.i("save spell", "saving it: $spellIndex")
+                val response = apiService.saveSpell(teamId = teamId, spellIndex = spellIndex)
+                _response.value = ApiState.Success(response)
+            } catch (e: Exception) {
+                val errorMessage = "error during save spells"
+                Log.e("API_ERROR", errorMessage, e)
+                _response.value = ApiState.Error(errorMessage)
+            }
+        }
+    }
+
+    fun saveDoubleDown(teamId: Int, playerId: Int, weekNum: Int) {
+        viewModelScope.launch {
+            try {
+                val response = apiService.saveDoubleDown(teamId = teamId, playerId = playerId, weekNum = weekNum)
+                _response.value = ApiState.Success(response)
+            } catch (e: Exception) {
+                val errorMessage = "error during save double down"
+                Log.e("API_ERROR", errorMessage, e)
+                _response.value = ApiState.Error(errorMessage)
+            }
+        }
+    }
+
+    fun savePennant(teamId: Int, pennantKey: String) {
+        viewModelScope.launch {
+            try {
+                val response = apiService.savePennant(teamId = teamId, pennantKey = pennantKey)
+                _response.value = ApiState.Success(response)
+            } catch (e: Exception) {
+                val errorMessage = "error during save pennant"
+                Log.e("API_ERROR", errorMessage, e)
+                _response.value = ApiState.Error(errorMessage)
+            }
+        }
+    }
 }

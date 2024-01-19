@@ -90,6 +90,81 @@ fun TeamHomePage(navController: NavHostController, teamId : Int) {
                 ) {
                     Text("Manage Team Roster", fontSize = 16.sp)
                 }
+                if (teamInfo.game_abbrev == "DD1") {
+                    Text(" ", fontSize = 4.sp)
+                    Button(contentPadding = PaddingValues(all = 2.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.Blue,
+                            contentColor = Color.White),
+                        modifier = Modifier.size(width = 360.dp, height = 34.dp),
+                        onClick = {
+                            navController.navigate(
+                                TeamRoutes.TEAM_DD1_PICKS.replace(TeamRoutes.ARG_TAG_TEAM_ID, teamInfo.team_id.toString())
+                            )
+                        }
+                    ) {
+                        Text("Weekly Pick'Em", fontSize = 16.sp)
+                    }
+                }
+                if (teamInfo.game_abbrev == "DD2") {
+                    Text(" ", fontSize = 4.sp)
+                    Button(contentPadding = PaddingValues(all = 2.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.Blue,
+                            contentColor = Color.White),
+                        modifier = Modifier.size(width = 360.dp, height = 34.dp),
+                        onClick = {
+                            navController.navigate(
+                                TeamRoutes.TEAM_DD2_PICKS.replace(TeamRoutes.ARG_TAG_TEAM_ID, teamInfo.team_id.toString())
+                            )
+                        }
+                    ) {
+                        Text("Double Down Selection", fontSize = 16.sp)
+                    }
+                }
+                if (teamInfo.game_abbrev == "PP") {
+                    Text(" ", fontSize = 4.sp)
+                    Button(contentPadding = PaddingValues(all = 2.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.Blue,
+                            contentColor = Color.White),
+                        modifier = Modifier.size(width = 360.dp, height = 34.dp),
+                        onClick = {
+                            navController.navigate(
+                                TeamRoutes.TEAM_PP_SELECTIONS.replace(TeamRoutes.ARG_TAG_TEAM_ID, teamInfo.team_id.toString())
+                            )
+                        }
+                    ) {
+                        Text("Pennant Selection", fontSize = 16.sp)
+                    }
+                }
+                if (teamInfo.game_abbrev == "WS") {
+                    Text(" ", fontSize = 4.sp)
+                    Button(contentPadding = PaddingValues(all = 2.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.Blue,
+                            contentColor = Color.White),
+                        modifier = Modifier.size(width = 360.dp, height = 34.dp),
+                        onClick = {
+                            navController.navigate(
+                                TeamRoutes.TEAM_WS_SHOW.replace(TeamRoutes.ARG_TAG_TEAM_ID, teamInfo.team_id.toString())
+                            )
+                        }
+                    ) {
+                        Text("Weekly Special", fontSize = 16.sp)
+                    }
+                }
+                if (teamInfo.game_abbrev == "BC") {
+                    Text(" ", fontSize = 4.sp)
+                    Button(contentPadding = PaddingValues(all = 2.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.Blue,
+                            contentColor = Color.White),
+                        modifier = Modifier.size(width = 360.dp, height = 34.dp),
+                        onClick = {
+                            navController.navigate(
+                                TeamRoutes.TEAM_BC_SPELLS.replace(TeamRoutes.ARG_TAG_TEAM_ID, teamInfo.team_id.toString())
+                            )
+                        }
+                    ) {
+                        Text("Spell Selection", fontSize = 16.sp)
+                    }
+                }
                 Text(" ", fontSize = 4.sp)
                 if (responseData.weekNum > 0) {
                     if (responseData.gameLive) {
