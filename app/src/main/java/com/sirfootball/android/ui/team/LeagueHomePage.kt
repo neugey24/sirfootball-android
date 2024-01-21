@@ -9,6 +9,8 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Divider
 import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.Text
@@ -16,6 +18,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontStyle
@@ -72,16 +75,49 @@ fun LeagueHomePage(navController: NavHostController, leagueId : Int) {
                 Divider(modifier = Modifier.padding(vertical = 8.dp))
                 Text(text = "League Info & Options:", fontSize = 17.sp, fontStyle = FontStyle.Italic,
                     modifier = Modifier.padding(vertical = 8.dp))
-                ElevatedButton(contentPadding = PaddingValues(all = 8.dp),
+                Button(contentPadding = PaddingValues(all = 2.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Blue,
+                        contentColor = Color.White),
                     modifier = Modifier.size(width = 360.dp, height = 34.dp),
                     onClick = {
+                        navController.navigate(
+                            TeamRoutes.LEAGUE_STANDINGS.replace(TeamRoutes.ARG_TAG_LEAGUE_ID, leagueId.toString())
+                        )
+                    }
+                ) {
+                    Text("League Standings", fontSize = 16.sp)
+                }
+                if (responseData.gamesCommenced) {
+                    Text(" ", fontSize = 8.sp)
+                    Button(contentPadding = PaddingValues(all = 2.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.Blue,
+                            contentColor = Color.White),
+                        modifier = Modifier.size(width = 360.dp, height = 34.dp),
+                        onClick = {
+                            navController.navigate(
+                                TeamRoutes.LEAGUE_SCOREBOARD.replace(TeamRoutes.ARG_TAG_LEAGUE_ID, leagueId.toString())
+                            )
+                        }
+                    ) {
+                        Text("League Scoreboard", fontSize = 16.sp)
+                    }
+                }
+                Text(" ", fontSize = 8.sp)
+                Button(contentPadding = PaddingValues(all = 2.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Blue,
+                        contentColor = Color.White),
+                    modifier = Modifier.size(width = 360.dp, height = 34.dp),
+                    onClick = {
+
                     }
                 ) {
                     Text("Game Rules", fontSize = 16.sp)
                 }
                 Text(" ", fontSize = 8.sp)
-                ElevatedButton(contentPadding = PaddingValues(all = 8.dp),
-                    modifier = Modifier.size(width = 220.dp, height = 34.dp),
+                Button(contentPadding = PaddingValues(all = 2.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Blue,
+                        contentColor = Color.White),
+                    modifier = Modifier.size(width = 360.dp, height = 34.dp),
                     onClick = {
                         navController.popBackStack()
                     }

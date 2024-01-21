@@ -26,8 +26,6 @@ class TeamRoutes private constructor() {
         const val ARG_REQUEST_POS = "requestPos"
         const val ARG_TAG_REQUEST_POS = "{$ARG_REQUEST_POS}"
 
-        const val LEAGUE_HOME = "league/$ARG_TAG_LEAGUE_ID"
-
         const val ARG_WEEK_NUM = "weekNum"
         const val ARG_TAG_WEEK_NUM = "{$ARG_WEEK_NUM}"
 
@@ -50,6 +48,10 @@ class TeamRoutes private constructor() {
         const val TEAM_DD2_PICKS = "game/DD2/$ARG_TAG_TEAM_ID"
         const val TEAM_PP_SELECTIONS = "game/PP/$ARG_TAG_TEAM_ID"
         const val TEAM_WS_SHOW = "game/WS/$ARG_TAG_TEAM_ID"
+
+        const val LEAGUE_HOME = "league/$ARG_TAG_LEAGUE_ID"
+        const val LEAGUE_STANDINGS = "league/standings/$ARG_TAG_LEAGUE_ID"
+        const val LEAGUE_SCOREBOARD = "league/scoreboard/$ARG_TAG_LEAGUE_ID"
 
     }
 }

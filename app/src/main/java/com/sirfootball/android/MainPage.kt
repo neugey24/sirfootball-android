@@ -38,6 +38,8 @@ import com.sirfootball.android.ui.team.detail.TeamPennantsPage
 import com.sirfootball.android.ui.team.detail.TeamPickEmPage
 import com.sirfootball.android.ui.team.detail.TeamSpellsPage
 import com.sirfootball.android.ui.team.detail.TeamWeeklySpecialPage
+import com.sirfootball.android.ui.team.league.LeagueScoreboardPage
+import com.sirfootball.android.ui.team.league.LeagueStandingsPage
 
 
 @Composable
@@ -142,6 +144,27 @@ private fun MainScreenNavigationConfigurations(
                     val leagueIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_LEAGUE_ID) ?: -1
                     LeagueHomePage(navController = navController, leagueId = leagueIdArgIn)
                 }
+
+                navigation(startDestination = TeamRoutes.TEAM_ROSTER, route = "leagueHomeStub") {
+                    composable(route = TeamRoutes.LEAGUE_HOME, arguments = listOf(
+                        navArgument(TeamRoutes.ARG_LEAGUE_ID) { type = NavType.IntType})) {
+                        val leagueIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_LEAGUE_ID) ?: -1
+                        LeagueHomePage(navController = navController, leagueId = leagueIdArgIn)
+                    }
+
+                    composable(route = TeamRoutes.LEAGUE_STANDINGS, arguments = listOf(
+                        navArgument(TeamRoutes.ARG_LEAGUE_ID) { type = NavType.IntType})) {
+                        val leagueIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_LEAGUE_ID) ?: -1
+                        LeagueStandingsPage(leagueId = leagueIdArgIn)
+                    }
+
+                    composable(route = TeamRoutes.LEAGUE_SCOREBOARD, arguments = listOf(
+                        navArgument(TeamRoutes.ARG_LEAGUE_ID) { type = NavType.IntType})) {
+                        val leagueIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_LEAGUE_ID) ?: -1
+                        LeagueScoreboardPage(navController = navController, leagueId = leagueIdArgIn)
+                    }
+                }
+
                 composable(route = TeamRoutes.PREVIEW, arguments = listOf(
                     navArgument(TeamRoutes.ARG_LEAGUE_ID) { type = NavType.IntType},
                     navArgument(TeamRoutes.ARG_WEEK_NUM) { type = NavType.IntType},

@@ -6,6 +6,8 @@ import com.sirfootball.android.data.model.GetPlayerInfoResponse
 import com.sirfootball.android.data.model.GetTeamInfoResponse
 import com.sirfootball.android.data.model.LoadAddSlotGatherResponse
 import com.sirfootball.android.data.model.LoadJoinLeagueListResponse
+import com.sirfootball.android.data.model.LoadLeagueScoreboardResponse
+import com.sirfootball.android.data.model.LoadLeagueStandingsResponse
 import com.sirfootball.android.data.model.LoadPreviewResponse
 import com.sirfootball.android.data.model.LoadScorecardResponse
 import com.sirfootball.android.data.model.LoadTeamAddPlayerResponse
@@ -77,6 +79,14 @@ interface AppService {
     @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
     @GET("getLeagueInfo/{leagueId}")
     suspend fun getLeagueInfo(@Path("leagueId") leagueId : Int): GetLeagueInfoResponse
+
+    @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
+    @GET("getLeagueStandings/{leagueId}")
+    suspend fun getLeagueStandings(@Path("leagueId") leagueId : Int): LoadLeagueStandingsResponse
+
+    @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
+    @GET("getLeagueScoreboard/{leagueId}")
+    suspend fun getLeagueScoreboard(@Path("leagueId") leagueId : Int): LoadLeagueScoreboardResponse
 
     @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
     @GET("getPreview/{leagueId}/{weekNum}/{matchupNum}")

@@ -3,7 +3,9 @@ package com.sirfootball.android.data.model
 data class GetLeagueInfoResponse (
     val result: String,
     val detail: String,
-    val leagueInfo: LeagueInfo
+    val leagueInfo: LeagueInfo,
+    val gamesCommenced: Boolean,
+    val weekNum: Int
 )
 
 data class LeagueInfo (
