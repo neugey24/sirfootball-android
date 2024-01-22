@@ -90,6 +90,19 @@ fun TeamHomePage(navController: NavHostController, teamId : Int) {
                 ) {
                     Text("Manage Team Roster", fontSize = 16.sp)
                 }
+                Text(" ", fontSize = 4.sp)
+                Button(contentPadding = PaddingValues(all = 2.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Blue,
+                        contentColor = Color.White),
+                    modifier = Modifier.size(width = 360.dp, height = 34.dp),
+                    onClick = {
+                        navController.navigate(
+                            TeamRoutes.TEAM_SCHEDULE.replace(TeamRoutes.ARG_TAG_TEAM_ID, teamInfo.team_id.toString())
+                        )
+                    }
+                ) {
+                    Text("Team Schedule", fontSize = 16.sp)
+                }
                 if (teamInfo.game_abbrev == "DD1") {
                     Text(" ", fontSize = 4.sp)
                     Button(contentPadding = PaddingValues(all = 2.dp),
@@ -214,12 +227,26 @@ fun TeamHomePage(navController: NavHostController, teamId : Int) {
                 ) {
                     Text("League: ${teamInfo.league_name}", fontSize = 16.sp)
                 }
+                Text(" ", fontSize = 4.sp)
+                Button(contentPadding = PaddingValues(all = 2.dp),
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Blue,
+                        contentColor = Color.White),
+                    modifier = Modifier.size(width = 360.dp, height = 34.dp),
+                    onClick = {
+                        navController.navigate(
+                            TeamRoutes.TEAM_TRANSACTIONS.replace(TeamRoutes.ARG_TAG_TEAM_ID, teamInfo.team_id.toString()))
+                    }
+                ) {
+                    Text("Team Transactions", fontSize = 16.sp)
+                }
                 Text(" ", fontSize = 8.sp)
                 Button(contentPadding = PaddingValues(all = 2.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color.Blue,
                         contentColor = Color.White),
                     modifier = Modifier.size(width = 220.dp, height = 34.dp),
                     onClick = {
+                        navController.navigate(
+                            TeamRoutes.TEAM_SETTINGS.replace(TeamRoutes.ARG_TAG_TEAM_ID, teamInfo.team_id.toString()))
                     }
                 ) {
                     Text("Team Settings", fontSize = 16.sp)
@@ -244,6 +271,8 @@ fun TeamHomePage(navController: NavHostController, teamId : Int) {
                                 contentColor = Color.White),
                             modifier = Modifier.size(width = 160.dp, height = 34.dp),
                             onClick = {
+                                navController.navigate(
+                                    TeamRoutes.TEAM_CHANGE_AVATAR_SELECT_GROUP.replace(TeamRoutes.ARG_TAG_TEAM_ID, teamInfo.team_id.toString()))
                             }
                         ) {
                             Text("Change Avatar", fontSize = 15.sp)

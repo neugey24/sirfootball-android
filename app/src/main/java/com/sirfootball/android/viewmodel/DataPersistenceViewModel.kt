@@ -7,8 +7,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sirfootball.android.data.api.ApiState
 import com.sirfootball.android.data.api.AppService
+import com.sirfootball.android.data.model.ChangeTeamNameFormData
 import com.sirfootball.android.data.model.GeneralPersistenceResponse
 import com.sirfootball.android.data.model.NewTeamFormData
+import com.sirfootball.android.structure.AvatarGroup
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -26,10 +28,24 @@ class DataPersistenceViewModel @Inject constructor(private val apiService: AppSe
                 Log.i("Save", "For Save In viewmodel leagueId is $leagueId")
                 Log.i("Save", "For Save In viewmodel cityName is ${newTeamData.cityName}")
                 val response = apiService.joinLeague(leagueId = leagueId, postData = newTeamData)
-                Log.i("Save", "Success point in ViewModel reached")
+                Log.i("Save", "Success point in ViewModel reached - join league")
                 _response.value = ApiState.Success(response)
             } catch (e: Exception) {
                 val errorMessage = "error during joining league with team data"
+                Log.e("API_ERROR", errorMessage, e)
+                _response.value = ApiState.Error(errorMessage)
+            }
+        }
+    }
+
+    fun changeTeamName(teamId: Int, nameData : ChangeTeamNameFormData) {
+        viewModelScope.launch {
+            try {
+                val response = apiService.changeTeamName(teamId = teamId, postData = nameData)
+                Log.i("Save", "Success point in ViewModel reached - change team name")
+                _response.value = ApiState.Success(response)
+            } catch (e: Exception) {
+                val errorMessage = "error during change team name"
                 Log.e("API_ERROR", errorMessage, e)
                 _response.value = ApiState.Error(errorMessage)
             }
@@ -43,6 +59,19 @@ class DataPersistenceViewModel @Inject constructor(private val apiService: AppSe
                 _response.value = ApiState.Success(response)
             } catch (e: Exception) {
                 val errorMessage = "error during claiming team with team data"
+                Log.e("API_ERROR", errorMessage, e)
+                _response.value = ApiState.Error(errorMessage)
+            }
+        }
+    }
+
+    fun leaveLeague(teamId: Int) {
+        viewModelScope.launch {
+            try {
+                val response = apiService.leaveLeague(teamId = teamId)
+                _response.value = ApiState.Success(response)
+            } catch (e: Exception) {
+                val errorMessage = "error during leave league"
                 Log.e("API_ERROR", errorMessage, e)
                 _response.value = ApiState.Error(errorMessage)
             }
@@ -138,6 +167,19 @@ class DataPersistenceViewModel @Inject constructor(private val apiService: AppSe
                 _response.value = ApiState.Success(response)
             } catch (e: Exception) {
                 val errorMessage = "error during save pennant"
+                Log.e("API_ERROR", errorMessage, e)
+                _response.value = ApiState.Error(errorMessage)
+            }
+        }
+    }
+
+    fun changeAvatar(teamId: Int, groupKey: String, avatarName: String) {
+        viewModelScope.launch {
+            try {
+                val response = apiService.changeAvatar(teamId, groupKey, avatarName)
+                _response.value = ApiState.Success(response)
+            } catch (e: Exception) {
+                val errorMessage = "error during change avatar"
                 Log.e("API_ERROR", errorMessage, e)
                 _response.value = ApiState.Error(errorMessage)
             }

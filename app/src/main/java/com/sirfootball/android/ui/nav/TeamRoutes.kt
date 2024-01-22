@@ -32,6 +32,9 @@ class TeamRoutes private constructor() {
         const val ARG_MATCHUP_NUM = "matchupNum"
         const val ARG_TAG_MATCHUP_NUM = "{$ARG_MATCHUP_NUM}"
 
+        const val ARG_AVATAR_GROUP = "avatarGroup"
+        const val ARG_TAG_AVATAR_GROUP = "{$ARG_AVATAR_GROUP}"
+
         const val PREVIEW = "preview/$ARG_TAG_LEAGUE_ID/$ARG_TAG_WEEK_NUM/$ARG_TAG_MATCHUP_NUM"
 
         const val SCORECARD = "scorecard/$ARG_TAG_LEAGUE_ID/$ARG_TAG_WEEK_NUM/$ARG_TAG_MATCHUP_NUM"
@@ -40,6 +43,13 @@ class TeamRoutes private constructor() {
         const val TEAM_ROSTER_ADD = "rosterAdd/$ARG_TAG_TEAM_ID/$ARG_TAG_SLOT_NAME/$ARG_TAG_IS_DR/$ARG_TAG_REQUEST_POS"
 
         const val TEAM_ROSTER_ADD_SLOT = "rosterAddSlot/$ARG_TAG_TEAM_ID/$ARG_TAG_PLAYER_ID/$ARG_TAG_ON_WAIVERS"
+
+        const val TEAM_TRANSACTIONS = "transactions/$ARG_TAG_TEAM_ID"
+        const val TEAM_SETTINGS = "settings/$ARG_TAG_TEAM_ID"
+        const val TEAM_CHANGE_AVATAR_SELECT_GROUP = "avatarGroup/$ARG_TAG_TEAM_ID"
+        const val TEAM_CHANGE_AVATAR_SELECT_AVATAR = "avatarImage/$ARG_TAG_TEAM_ID/$ARG_TAG_AVATAR_GROUP"
+
+        const val TEAM_SCHEDULE = "schedule/$ARG_TAG_TEAM_ID"
 
         const val PLAYER_INFO = "player/$ARG_TAG_PLAYER_ID"
 
@@ -51,7 +61,9 @@ class TeamRoutes private constructor() {
 
         const val LEAGUE_HOME = "league/$ARG_TAG_LEAGUE_ID"
         const val LEAGUE_STANDINGS = "league/standings/$ARG_TAG_LEAGUE_ID"
+        const val LEAGUE_HIGH_SCORES = "league/highScores/$ARG_TAG_LEAGUE_ID"
         const val LEAGUE_SCOREBOARD = "league/scoreboard/$ARG_TAG_LEAGUE_ID"
+        const val LEAGUE_TRANSACTIONS = "league/transactions/$ARG_TAG_LEAGUE_ID"
 
     }
 }
