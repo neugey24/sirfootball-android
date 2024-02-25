@@ -7,4 +7,18 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="panel_bg">#ECD9BD</color>
+    <color name="panel_action_bg">#DCC9AD</color>
+    <color name="panel_fg">#0E319B</color>
+    <color name="score_team_bg">#DD0000</color>
+    <color name="score_opp_bg">#5190F3</color>
+    <color name="score_bench_bg">#999999</color>
+    <color name="qb_tab_bg">#C20909</color>
+    <color name="rb_tab_bg">#CC610B</color>
+    <color name="wr_tab_bg">#BDA40A</color>
+    <color name="te_tab_bg">#109B07</color>
+    <color name="flex_tab_bg">#BE1469</color>
+    <color name="k_tab_bg">#393BE5</color>
+    <color name="dfst_tab_bg">#A41CD7</color>
+
 </resources>

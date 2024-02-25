@@ -1,6 +1,10 @@
 <resources>
-    <string name="app_name">Test App</string>
-    <string name="title_home">Home</string>
-    <string name="title_dashboard">Dashboard</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="app_name">Sir Football Android App</string>
+    <string name="title_home">Locker Room</string>
+    <string name="title_draft">Draft</string>
+    <string name="title_add">Add</string>
+    <string name="title_questions">Questions</string>
+    <string name="title_settings">Settings</string>
+    <string name="title_activity_main2">MainActivity2</string>
+    <string name="some_default_response">Some Default Response</string>
 </resources>
