@@ -11,9 +11,6 @@ class SirGame private constructor() {
         private val BC_DATA = mapOf(  "abbrev" to "BC", "name"  to  "Blessed and Cursed", "style"  to  "blessedCursed", "image"  to  "blessed_cursed",
             "logo" to "bc2", "gamePage" to "blessed_and_cursed", "scoreDecimalPlaces" to 2, "knightName" to "Caradoc")
 
-        private val DG_DATA = mapOf(   "abbrev" to "DG", "name"  to  "Decathlon Gold", "style"  to  "decathlonGold", "image"  to  "decathlon_gold",
-            "logo" to "dg", "gamePage" to "decathlon_gold", "scoreDecimalPlaces" to 0, "knightName" to "Lancelot")
-
         private val DD1_DATA = mapOf(
             "abbrev" to "DD1", "name"  to  "Decisions, Decisions", "style"  to  "decDec", "image"  to  "decdec",
             "logo" to "dd1", "gamePage" to "decisions_decisions", "scoreDecimalPlaces" to 2, "knightName" to "Claudin")
@@ -38,9 +35,12 @@ class SirGame private constructor() {
             "abbrev" to "SL", "name"  to  "Squid League", "style"  to  "squid", "image"  to  "squidleague",
             "logo" to "sl", "gamePage" to "squid_league", "scoreDecimalPlaces" to 2, "knightName" to "Sagramor")
 
-        private val SS_DATA = mapOf(
-            "abbrev" to "SS", "name"  to  "Scary Sight", "style"  to  "scarySight", "image"  to  "scarysight",
+        private val SCS_DATA = mapOf(
+            "abbrev" to "SCS", "name"  to  "Scary Sight", "style"  to  "scarySight", "image"  to  "scarysight",
             "logo" to "ss2", "gamePage" to "scary_sight", "scoreDecimalPlaces" to 2, "knightName" to "Modred")
+
+        private val TAL_DATA = mapOf(   "abbrev" to "TAL", "name"  to  "Tier Lord", "style"  to  "tierLord", "image"  to  "tier_lord",
+            "logo" to "tal", "gamePage" to "tier_lord", "scoreDecimalPlaces" to 2, "knightName" to "Lancelot")
 
         private val TD_DATA = mapOf(
             "abbrev" to "TD", "name"  to  "Top Dog", "style"  to  "topDog", "image"  to  "topdog",
@@ -54,9 +54,9 @@ class SirGame private constructor() {
             "abbrev" to "WS", "name"  to  "Weekly Special", "style"  to  "weeklySpecial", "image"  to  "weeklyspecial",
             "logo" to "ws", "gamePage" to "weekly_special", "scoreDecimalPlaces" to 2, "knightName" to "Yvain")
 
-        val GAME_DATA = mapOf("BB" to BB_DATA, "BC" to BC_DATA, "DG" to DG_DATA,  "DD1" to DD1_DATA, "DD2" to DD2_DATA,
-            "GV" to GV_DATA, "PD" to PD_DATA, "PP" to PP_DATA, "SL" to SL_DATA, "SS" to SS_DATA, "TD" to TD_DATA,
-            "UH" to UH_DATA, "WS" to WS_DATA )
+        val GAME_DATA = mapOf("BB" to BB_DATA, "BC" to BC_DATA, "DD1" to DD1_DATA, "DD2" to DD2_DATA,
+            "GV" to GV_DATA, "PD" to PD_DATA, "PP" to PP_DATA, "SL" to SL_DATA, "SCS" to SCS_DATA, "TAL" to TAL_DATA,
+            "TD" to TD_DATA, "UH" to UH_DATA, "WS" to WS_DATA )
 
         val ALL_STATS = listOf(
             "passTD",
