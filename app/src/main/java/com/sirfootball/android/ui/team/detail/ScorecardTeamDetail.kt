@@ -96,7 +96,7 @@ fun ScorecardTeamDetail(teamInfo : ScorecardTeamInfo, teamScorecard: TeamScoreca
         if (gameAbbrev == "PP") {
             RenderPennantPlayScoresheet(teamScorecard, oppScorecard)
         }
-        if (gameAbbrev == "SS") {
+        if (gameAbbrev == "SCS") {
             RenderScarySightScoresheet()
         }
         if (gameAbbrev == "TD") {

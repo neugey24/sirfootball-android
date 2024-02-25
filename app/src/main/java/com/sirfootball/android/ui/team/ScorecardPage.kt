@@ -1,26 +1,20 @@
 package com.sirfootball.android.ui.team
 
-import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.Divider
-import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.ModalBottomSheet
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.material3.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -35,33 +29,24 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.sirfootball.android.R
 import com.sirfootball.android.data.api.ApiState
-import com.sirfootball.android.data.model.AvailableLeague
-import com.sirfootball.android.data.model.NewTeamFormData
-import com.sirfootball.android.data.model.PreviewTeamInfo
-import com.sirfootball.android.data.model.PreviewTeamSlot
 import com.sirfootball.android.data.model.ScheduledGameData
 import com.sirfootball.android.data.model.ScorecardPlayerInfo
-import com.sirfootball.android.data.model.ScorecardSlot
 import com.sirfootball.android.data.model.ScorecardStat
 import com.sirfootball.android.data.model.ScorecardTeamInfo
 import com.sirfootball.android.data.model.TeamScorecard
 import com.sirfootball.android.structure.SirAvatar
 import com.sirfootball.android.structure.SirGame
 import com.sirfootball.android.structure.SirRoster
-import com.sirfootball.android.ui.nav.SFBottomNavItem
 import com.sirfootball.android.ui.team.detail.ScorecardBBPage
-import com.sirfootball.android.ui.team.detail.ScorecardDGPage
 import com.sirfootball.android.ui.team.detail.ScorecardPlayerDetail
 import com.sirfootball.android.ui.team.detail.ScorecardSLPage
 import com.sirfootball.android.ui.team.detail.ScorecardTeamDetail
-import com.sirfootball.android.viewmodel.GetPreviewViewModel
 import com.sirfootball.android.viewmodel.GetScorecardViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -136,16 +121,11 @@ fun ScorecardPage(leagueId : Int, weekNum: Int, matchupNum: Int) {
                 }
                 Text(text = " ", fontSize = 10.sp)
 
-                if (gameAbbrev == "BB" || gameAbbrev == "DG" || gameAbbrev == "SL") {
+                if (gameAbbrev == "BB" || gameAbbrev == "SL") {
                     if (gameAbbrev == "BB") {
                         ScorecardBBPage(responseData)
                     } else {
-                        if (gameAbbrev == "SL") {
-                            ScorecardSLPage(responseData)
-                        } else {
-                            ScorecardDGPage(responseData)
-                        }
-
+                        ScorecardSLPage(responseData)
                     }
                 } else {
 

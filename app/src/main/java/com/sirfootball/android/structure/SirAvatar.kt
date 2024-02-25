@@ -129,10 +129,26 @@ class SirAvatar private constructor() {
                         "warthog"
                     )
 
+                    AvatarGroup.anime.toString() -> listOf(
+                        "beetle_boy","biker_cat","biker_eagle","blue_beaver","boxer","bully","business_badger",
+                        "crawler","croc","cyber","cyborg_lizard","deer_girl","emerald_cat","fox_player","giraffe",
+                        "golden_boy","golden_dolphin","hottie","ice_cat","iggy_ref","jeweled_frog","kitty_mascot",
+                        "knight","lightning_maiden","lion","mechanical_villain","money_boy","pads","pony_kicker",
+                        "pyro","rainbow_furball","rainbow_serpent","rhino","skeleton_moon","snake","spike","spike2",
+                        "spikes","steel_boy","vampire_ref","wiry"
+                    )
+
                     AvatarGroup.bobbleheads.toString() -> listOf(
                         "blue_uniform", "coach", "dark_magenta_uniform",
                         "green_uniform", "magenta_uniform", "orange_uniform",
                         "purple_uniform", "red_white_uniform", "yellow_uniform"
+                    )
+
+                    AvatarGroup.cats.toString() -> listOf(
+                        "american_bobtail","birman", "california2", "korat2", "persian", "siamese2",
+                        "american_longhair","bombay", "exotic_shorthair","laperm", "ragamuffin", "york",
+                        "american_shorthair","burmese", "himalayan", "nebelung", "ragamuffin2",
+                        "balinese", "california", "korat", "norwegian", "siamese"
                     )
 
                     AvatarGroup.cheerleaders.toString() -> listOf(
@@ -230,6 +246,19 @@ class SirAvatar private constructor() {
                         "snowmobile1",
                         "tree_mascot",
                         "wreath_mascot"
+                    )
+
+                    AvatarGroup.dogs.toString() -> listOf(
+                        "airedale", "border_terrier", "cocker_spaniel", "french_poodle2", "italian_greyhound", "rottweiler",
+                        "akita", "boxer", "collie", "german_shepherd", "jack_russell", "scottish_terrier", "american_eskimo",
+                        "bull_terrier", "corgi", "german_shepherd2", "lhasa_alpo", "shiba_inu", "american_samoyed",
+                        "bull_terrier2", "corgi2", "golden_retriever", "maltese", "shiba_inu2", "bassett_hound2",
+                        "bulldog", "dachshund", "golden_retriever2", "mastiff", "shih_tzu", "bassett_houng", "bulldog2",
+                        "dachshund2", "great_dane", "papillon", "siberian_husky", "beagle", "cane_corso", "dalmation",
+                        "greyhound", "pitbull", "st_bernard", "beagle2", "chihuahua", "doberman", "havanese",
+                        "pomeranian", "whippet", "bichon", "chihuahua2", "doberman2", "havanese2", "pomeranian2",
+                        "yorky", "black_lab", "chocolate_lab", "french_bulldog", "husky_white", "pug", "bloodhound",
+                        "chocolate_lab2", "french_poodle", "husky_white2", "pug2"
                     )
 
                     AvatarGroup.emoji.toString() -> listOf(
@@ -366,6 +395,16 @@ class SirAvatar private constructor() {
                         "tuxedo"
                     )
 
+                    AvatarGroup.gnomes.toString() -> listOf(
+                        "armor","clown2","guitar2","karate","old_man3","ref","armor2","cowboy","guitar3",
+                        "magic_wand","pilot","robber","astronaut","cowboy2",
+                        "guitar4","magician","pirate","samurai","axe1","crystal_ball","guitar5","magician2","pirate2","samurai2","axe2","driver",
+                        "helmet","miner","player","sombrero","banker","engineer","helmet2","monk","plumber","trumpet","biker","farmer","hiker",
+                        "monk2","policeman","tux","chef","firefighter","hippie","old_man","racer2","tux2","clown",
+                        "guitar","hippie2","old_man2","rancher"
+
+                    )
+
                     AvatarGroup.gods.toString() -> listOf(
                         "helmet_god", "hera1", "hera2", "hercules", "horus", "icarus", "isis",
                         "lightning_god", "medusa", "odysseus", "osiris", "poseidon", "zeus"
@@ -376,6 +415,12 @@ class SirAvatar private constructor() {
                         "ghost1", "ghost2", "ghost3", "green_witch", "mummy1", "mummy2",
                         "scarecrow", "skeleton_ghoul", "skeleton_witch", "vampire_priestess",
                         "vampire_warrior", "werewolf", "werewolf2", "zombie_warrior"
+                    )
+
+                    AvatarGroup.meme.toString() -> listOf(
+                        "crying_jordan","doge","doge_football","doge_ref","doge_suit","doge_wizard",
+                        "grumpy_cat_football","grumpy_cat_jersey","grumpy_cat_leather","most_interesting","nyan_cat",
+                        "pepe1","picard","this_is_fine","trollface","trollface_tophat"
                     )
 
                     AvatarGroup.military.toString() -> listOf(
@@ -406,6 +451,24 @@ class SirAvatar private constructor() {
                         "flashy_blue_drum_set", "flute", "marching_band",
                         "purple_guitar", "saxophone", "skeletal_warrior_guitarist",
                         "trumpet", "violin"
+                    )
+
+                    AvatarGroup.ogres_orcs.toString() -> listOf(
+                        "beastmaster", "blue_devil", "bluestone", "bouncer", "bouncer2", "brawler", "chef",
+                        "club_bouncer", "dreamer", "drummer", "enchanted", "fixer", "gazer", "genius", "greenstone",
+                        "healer", "heartbreaker", "hiker", "horned", "horned2", "hulker", "lion_prince",
+                        "longhair", "magician", "master", "menace", "miner", "party", "perfect", "player",
+                        "pose", "punisher", "rainbow", "runner", "samurai", "saw", "saw_traveller", "searcher",
+                        "seer", "shifter", "slither", "sloppy", "stealth", "stone_keeper", "straight_a", "summoned",
+                        "sun_god", "victor", "waldo", "wanderer", "wayfarer", "wisest"
+                    )
+
+                    AvatarGroup.other_sports.toString() -> listOf(
+                        "baseball","baseball_girl","baseball_man","basketball_girl","basketball_guy","bowling",
+                        "bowling2","fencer","golf_girl","golf_girl2","golf_guy1","golf_guy2","hockey_girl",
+                        "hockey_man","ice_skater_female","ice_skater_male","karate_girl","karate_guy","pool_8ball",
+                        "racer_girl","racer_guy","soccer_ball","soccer_female","soccer_male","softball","softball_girl",
+                        "softball_girl2","tennis_ball","tennis_girl","tennis_man"
                     )
 
                     AvatarGroup.painted_footballs.toString() -> listOf(
@@ -479,6 +542,26 @@ class SirAvatar private constructor() {
                         "thief", "valkyrie", "warrior_princess"
                     )
 
+                    AvatarGroup.scifi.toString() -> listOf(
+                        "alien_aqua","alien_blue","alien_green","alien_green_squid","alien_orange","alien_red",
+                        "alien_red2","alien_yellow","arena_thug","attacking_football_ufo","big_eyes","black_hole_alien",
+                        "bling_helmet","bodybuilder","bouncer","brain","crazy_helmet","croc","croc2","crowned_alien",
+                        "cyborg_head","cyborg_head2","cyborg_head3","cyborg_head4","emoji_thug","examiner","eye_man",
+                        "fighter","fish_thug","football_ufo","helmet_weapon","insect","insect2","jewel_helmet","jeweled",
+                        "jeweled_helmet2","laser_helmet","leather_agent","lizard_fighter","magenta_sacuer","octopus","pilot",
+                        "raygun_helmet","righteous_helmet","saber_fighter","saucer_green","saucer_purple","scientist",
+                        "shock_alien","squid_fighter","squid_menace","squid_thug","sun_rager","sword_football","thug",
+                        "tree_alien","trenchcoat","trippy","trooper_alien","ufo_helmet","ufo_targeting_football",
+                        "weapon_helmet2","whisper_alien","wired_helmet","zebra_gunner","zombie","zombie2"
+                    )
+
+                    AvatarGroup.superhero.toString() -> listOf(
+                        "android", "angel", "blue_streak", "chrome", "cobra", "diamonds", "disco", "dragoness",
+                        "firefly", "huntress", "inspector", "intrigue", "ivory", "kombat", "magenta",
+                        "pearls", "pilot", "portal", "pounder", "priestess", "reaper", "shooter",
+                        "spike", "stripes", "teller", "tinkerer", "viper", "vr_man", "wings"
+                    )
+
                     else -> listOf()
                 }
             return avatars
@@ -492,18 +575,27 @@ enum class AvatarGroup {
     adult_beverage
     , alphabet_jackets
     , animal_mascots
+    , anime
     , bobbleheads
+    , cats
     , cheerleaders
     , chess
     , christmas_winter
+    , dogs
     , emoji
     , fantasy_creatures
     , food
     , football_fun
+    , gnomes
     , gods
     , halloween
+    , meme
     , military
     , music
+    , ogres_orcs
+    , other_sports
     , painted_footballs
     , rpg_warriors
+    , scifi
+    , superhero
 }
