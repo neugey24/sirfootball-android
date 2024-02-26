@@ -72,7 +72,11 @@ fun ScorecardTeamDetail(teamInfo : ScorecardTeamInfo, teamScorecard: TeamScoreca
                 fontSize = 20.sp)
         }
         Row {
-            Text( "Bonus", fontSize = 16.sp)
+            if (gameAbbrev == "TAL") {
+                Text( "Tier Rankings Points", fontSize = 16.sp)
+            } else {
+                Text( "Bonus", fontSize = 16.sp)
+            }
             Spacer(Modifier.weight(1f))
             Text( SirGame.formatScoreForGame(scoreIn = (teamScorecard.teamGrandTotal - teamScorecard.teamSubTotal), gameAbbrevIn = gameAbbrev),
                 fontSize = 16.sp)

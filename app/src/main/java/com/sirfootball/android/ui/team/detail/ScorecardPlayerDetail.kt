@@ -79,7 +79,13 @@ fun ScorecardPlayerDetail(teamInfo : ScorecardTeamInfo,
                 fontSize = 20.sp)
         }
         Row {
-            Text( "Bonus", fontSize = 16.sp)
+            if (gameAbbrev == "TAL") {
+                val tierLevel = if (currentDetailPlayerStat.modifiers?.size!! > 0)
+                    currentDetailPlayerStat.modifiers[0] else "UNK"
+                Text("$tierLevel Points", fontSize = 16.sp)
+            } else {
+                Text("Bonus", fontSize = 16.sp)
+            }
             Spacer(Modifier.weight(1f))
             Text( SirGame.formatScoreForGame(scoreIn = (currentDetailPlayerStat.playerGrandTotal - currentDetailPlayerStat.playerSubTotal), gameAbbrevIn = gameAbbrev),
                 fontSize = 16.sp)
