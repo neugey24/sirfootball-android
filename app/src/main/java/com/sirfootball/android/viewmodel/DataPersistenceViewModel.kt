@@ -91,6 +91,19 @@ class DataPersistenceViewModel @Inject constructor(private val apiService: AppSe
         }
     }
 
+    fun performTierRankingSwap(teamId: Int, slot1: String, slot2: String) {
+        viewModelScope.launch {
+            try {
+                val response = apiService.swapTierRankings(teamId = teamId, slot1 = slot1, slot2 = slot2)
+                _response.value = ApiState.Success(response)
+            } catch (e: Exception) {
+                val errorMessage = "error during swap tier ranking on team"
+                Log.e("API_ERROR", errorMessage, e)
+                _response.value = ApiState.Error(errorMessage)
+            }
+        }
+    }
+
     fun dropTeamPlayer(teamId: Int, dropSlot: String) {
         viewModelScope.launch {
             try {

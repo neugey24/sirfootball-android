@@ -21,6 +21,7 @@ import com.sirfootball.android.data.model.LoadTeamRosterResponse
 import com.sirfootball.android.data.model.LoadTeamScheduleResponse
 import com.sirfootball.android.data.model.LoadTeamSpellsCompositeResponse
 import com.sirfootball.android.data.model.LoadTeamSpellsResponse
+import com.sirfootball.android.data.model.LoadTeamTierRankingsResponse
 import com.sirfootball.android.data.model.LoadTeamTransactionsResponse
 import com.sirfootball.android.data.model.LoadTeamWeeklySpecialResponse
 import com.sirfootball.android.data.model.LoadUserCrownsResponse
@@ -38,8 +39,8 @@ interface AppService {
     companion object {
         const val APP_SECRET = "e68b7621452fc41e7295cfc976d411a9"
         //const val APP_USER_TOKEN = "ac15fa680b51f84de47cd0a6f81d1d31" // Stan
-        const val APP_USER_TOKEN = "811c10051732f76384a1ac80face89fc" // Kyle
-        //const val APP_USER_TOKEN = "c376416ee1a3bd63f762174dec276a81" // Eric Cartman
+        //const val APP_USER_TOKEN = "811c10051732f76384a1ac80face89fc" // Kyle
+        const val APP_USER_TOKEN = "c376416ee1a3bd63f762174dec276a81" // Eric Cartman
     }
 
     @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
@@ -81,6 +82,10 @@ interface AppService {
     @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
     @GET("game/PP/{teamId}")
     suspend fun getPennants(@Path("teamId") teamId : Int): LoadTeamPennantsResponse
+
+    @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
+    @GET("game/TAL/{teamId}")
+    suspend fun getTierRankings(@Path("teamId") teamId : Int): LoadTeamTierRankingsResponse
 
     @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
     @GET("game/WS/{teamId}")
@@ -181,6 +186,12 @@ interface AppService {
     @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
     @GET("performSlotSwap/{teamId}/{slot1}/{slot2}")
     suspend fun performSlotSwap(@Path("teamId") teamId : Int,
+                                @Path("slot1") slot1 : String,
+                                @Path("slot2") slot2 : String): GeneralPersistenceResponse
+
+    @Headers(value = ["X-SF-APP-SECRET: $APP_SECRET", "X-SF-APP-USER-TOKEN: $APP_USER_TOKEN"])
+    @PUT("game/TAL/{teamId}/{slot1}/{slot2}")
+    suspend fun swapTierRankings(@Path("teamId") teamId : Int,
                                 @Path("slot1") slot1 : String,
                                 @Path("slot2") slot2 : String): GeneralPersistenceResponse
 

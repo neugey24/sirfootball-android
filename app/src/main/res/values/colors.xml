@@ -21,4 +21,10 @@
     <color name="k_tab_bg">#393BE5</color>
     <color name="dfst_tab_bg">#A41CD7</color>
 
+    <color name="s_tier">#ec507d</color>
+    <color name="a_tier">#f3a26e</color>
+    <color name="b_tier">#eedd75</color>
+    <color name="c_tier">#98e373</color>
+    <color name="d_tier">#61e5d1</color>
+
 </resources>

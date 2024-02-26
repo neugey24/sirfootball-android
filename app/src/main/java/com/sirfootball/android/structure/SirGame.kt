@@ -1,6 +1,9 @@
 package com.sirfootball.android.structure
 
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
+import com.sirfootball.android.R
 
 class SirGame private constructor() {
 
@@ -84,6 +87,22 @@ class SirGame private constructor() {
             "dfstPA",
             "dfstSafeties"
         )
+
+        val ALL_TIERS = listOf(
+            "S", "A", "B", "C", "D"
+        )
+
+        @Composable
+        fun getTierColor(tierIn : String) : Color {
+            val tierToColor = mapOf("S" to colorResource(R.color.s_tier),
+                "A" to colorResource(R.color.a_tier),
+                "B" to colorResource(R.color.b_tier),
+                "C" to colorResource(R.color.c_tier),
+                "D" to colorResource(R.color.d_tier)
+            )
+
+            return tierToColor[tierIn] ?: Color.White
+        }
 
         @Composable
         fun formatScoreForGame(scoreIn: Double?, gameAbbrevIn: String) : String {

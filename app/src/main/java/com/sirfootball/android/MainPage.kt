@@ -44,6 +44,7 @@ import com.sirfootball.android.ui.team.detail.TeamDoubleDownPage
 import com.sirfootball.android.ui.team.detail.TeamPennantsPage
 import com.sirfootball.android.ui.team.detail.TeamPickEmPage
 import com.sirfootball.android.ui.team.detail.TeamSpellsPage
+import com.sirfootball.android.ui.team.detail.TeamTierRankingsPage
 import com.sirfootball.android.ui.team.detail.TeamWeeklySpecialPage
 import com.sirfootball.android.ui.team.league.LeagueHighScoresPage
 import com.sirfootball.android.ui.team.league.LeagueScoreboardPage
@@ -161,6 +162,11 @@ private fun MainScreenNavigationConfigurations(
                     navArgument(TeamRoutes.ARG_TEAM_ID) { type = NavType.IntType})) {
                     val teamIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_TEAM_ID) ?: -1
                     TeamPennantsPage(teamId = teamIdArgIn)
+                }
+                composable(route = TeamRoutes.TEAM_TAL_SELECTIONS, arguments = listOf(
+                    navArgument(TeamRoutes.ARG_TEAM_ID) { type = NavType.IntType})) {
+                    val teamIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_TEAM_ID) ?: -1
+                    TeamTierRankingsPage(teamId = teamIdArgIn)
                 }
                 composable(route = TeamRoutes.TEAM_WS_SHOW, arguments = listOf(
                     navArgument(TeamRoutes.ARG_TEAM_ID) { type = NavType.IntType})) {

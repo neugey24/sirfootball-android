@@ -148,6 +148,21 @@ fun TeamHomePage(navController: NavHostController, teamId : Int) {
                         Text("Pennant Selection", fontSize = 16.sp)
                     }
                 }
+                if (teamInfo.game_abbrev == "TAL") {
+                    Text(" ", fontSize = 4.sp)
+                    Button(contentPadding = PaddingValues(all = 2.dp),
+                        colors = ButtonDefaults.buttonColors(containerColor = Color.Blue,
+                            contentColor = Color.White),
+                        modifier = Modifier.size(width = 360.dp, height = 34.dp),
+                        onClick = {
+                            navController.navigate(
+                                TeamRoutes.TEAM_TAL_SELECTIONS.replace(TeamRoutes.ARG_TAG_TEAM_ID, teamInfo.team_id.toString())
+                            )
+                        }
+                    ) {
+                        Text("Update Tier Rankings", fontSize = 16.sp)
+                    }
+                }
                 if (teamInfo.game_abbrev == "WS") {
                     Text(" ", fontSize = 4.sp)
                     Button(contentPadding = PaddingValues(all = 2.dp),

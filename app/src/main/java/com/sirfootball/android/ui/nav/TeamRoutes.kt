@@ -57,6 +57,7 @@ class TeamRoutes private constructor() {
         const val TEAM_DD1_PICKS = "game/DD1/$ARG_TAG_TEAM_ID"
         const val TEAM_DD2_PICKS = "game/DD2/$ARG_TAG_TEAM_ID"
         const val TEAM_PP_SELECTIONS = "game/PP/$ARG_TAG_TEAM_ID"
+        const val TEAM_TAL_SELECTIONS = "game/TAL/$ARG_TAG_TEAM_ID"
         const val TEAM_WS_SHOW = "game/WS/$ARG_TAG_TEAM_ID"
 
         const val LEAGUE_HOME = "league/$ARG_TAG_LEAGUE_ID"
