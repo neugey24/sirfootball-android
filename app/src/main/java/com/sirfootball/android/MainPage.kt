@@ -1,6 +1,16 @@
 package com.sirfootball.android
 
 import android.annotation.SuppressLint
+import android.util.Log
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -9,21 +19,31 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.navigation
 import androidx.navigation.navArgument
-import com.sirfootball.android.ui.add.AddForGamePage
+import com.sirfootball.android.data.api.ApiState
+import com.sirfootball.android.data.model.LoginFormData
 import com.sirfootball.android.ui.nav.AddRoutes
 import com.sirfootball.android.ui.nav.SFBottomNavItem
 import com.sirfootball.android.ui.nav.TeamRoutes
 import com.sirfootball.android.ui.nav.UserRoutes
-import com.sirfootball.android.ui.root.AddTeamPage
 import com.sirfootball.android.ui.root.LockerRoomPage
 import com.sirfootball.android.ui.root.StubPage
 import com.sirfootball.android.ui.root.UserCrownsPage
@@ -31,47 +51,129 @@ import com.sirfootball.android.ui.team.LeagueHomePage
 import com.sirfootball.android.ui.team.PreviewPage
 import com.sirfootball.android.ui.team.ScorecardPage
 import com.sirfootball.android.ui.team.TeamHomePage
-import com.sirfootball.android.ui.team.TeamRosterAddPage
-import com.sirfootball.android.ui.team.TeamRosterAddSlotPage
-import com.sirfootball.android.ui.team.TeamRosterPage
 import com.sirfootball.android.ui.team.TeamSchedulePage
-import com.sirfootball.android.ui.team.TeamSettingsPage
 import com.sirfootball.android.ui.team.TeamTransactionsPage
-import com.sirfootball.android.ui.team.detail.PlayerInfoPage
-import com.sirfootball.android.ui.team.detail.TeamChangeAvatarSelectAvatarPage
-import com.sirfootball.android.ui.team.detail.TeamChangeAvatarSelectGroupPage
-import com.sirfootball.android.ui.team.detail.TeamDoubleDownPage
-import com.sirfootball.android.ui.team.detail.TeamPennantsPage
-import com.sirfootball.android.ui.team.detail.TeamPickEmPage
-import com.sirfootball.android.ui.team.detail.TeamSpellsPage
-import com.sirfootball.android.ui.team.detail.TeamWeeklySpecialPage
 import com.sirfootball.android.ui.team.league.LeagueHighScoresPage
 import com.sirfootball.android.ui.team.league.LeagueScoreboardPage
 import com.sirfootball.android.ui.team.league.LeagueStandingsPage
 import com.sirfootball.android.ui.team.league.LeagueTransactionsPage
+import com.sirfootball.android.viewmodel.DataPersistenceViewModel
 
+public const val SF_USER_SESSION = "com.sirfootball.user.session"
+
+public const val SF_USER_SESSION_KEY = "com.sirfootball.user.session.key"
+private const val SF_USER_SESSION_USERNAME = "com.sirfootball.user.session.username"
 
 @Composable
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 fun MainPage() {
 
-    val navController = rememberNavController()
+    var authReload by remember { mutableStateOf(true) }
+    val sessionKey = LocalContext.current.getSharedPreferences(SF_USER_SESSION, 0).getString(SF_USER_SESSION_KEY, "NA")
 
-    val bottomNavigationItems = listOf(
-        SFBottomNavItem.LockerRoom,
-        SFBottomNavItem.Draft,
-        SFBottomNavItem.Add,
-        SFBottomNavItem.Questions,
-        SFBottomNavItem.Settings
-    )
+    if (sessionKey == "NA" || authReload) {
+            // show login
+            SirFootballLogin(authReloadIn = {authReload = it})
 
-    Scaffold(
-        bottomBar = {
-            SFBottomNavigation(navController, bottomNavigationItems)
-        },
-    )
-    {
-        MainScreenNavigationConfigurations(navController)
+    } else {
+        // Show authenticated UI
+        authReload = false
+        val navController = rememberNavController()
+
+        val bottomNavigationItems = listOf(
+            SFBottomNavItem.LockerRoom,
+            SFBottomNavItem.Settings
+        )
+
+        Scaffold(
+            bottomBar = {
+                SFBottomNavigation(navController, bottomNavigationItems)
+            },
+        )
+        {
+            MainScreenNavigationConfigurations(navController)
+        }
+    }
+
+
+}
+
+@Composable
+fun SirFootballLogin(authReloadIn: (Boolean) -> Unit) {
+
+    val saveViewModel = hiltViewModel<DataPersistenceViewModel>()
+    val saveState = saveViewModel.authResponse.value
+
+    var username by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
+    var invalidLoginText by remember { mutableStateOf("") }
+
+    Column(verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier.fillMaxSize()) {
+
+        Spacer(Modifier.weight(2f))
+        Text(text = " Login To Sir Football", fontSize = 28.sp)
+        Spacer(Modifier.weight(1f))
+        OutlinedTextField(
+            modifier = Modifier.padding(2.dp),
+            value = username,
+            onValueChange = {
+                username = it
+            },
+            label = { Text("Username") }
+        )
+        OutlinedTextField(
+            modifier = Modifier.padding(4.dp),
+            value = password,
+            onValueChange = {
+                password = it
+            },
+            label = { Text("Password") }
+        )
+        Spacer(Modifier.weight(1f))
+        Button(contentPadding = PaddingValues(all = 2.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Color.Blue,
+                contentColor = Color.White),
+            modifier = Modifier.size(width = 140.dp, height = 34.dp),
+            onClick = {
+                val formData = LoginFormData(
+                    username = username, password = password)
+                saveViewModel.authenticate(formData)
+            }
+        ) {
+            Text("Login", fontSize = 14.sp)
+        }
+        Spacer(Modifier.weight(1f))
+        Text(text = invalidLoginText, fontSize = 18.sp, color = Color.Red)
+        Spacer(Modifier.weight(7f))
+
+    }
+
+    when (saveState) {
+        is ApiState.Loading -> {
+            Log.i("Save", "Loading the save state - authentication")
+        }
+
+        is ApiState.Success -> {
+            Log.i("Save", "In the success block - authentication")
+
+            // Save token to session context
+            val sessionDataEditor = LocalContext.current.getSharedPreferences(SF_USER_SESSION, 0).edit()
+            sessionDataEditor.putString(SF_USER_SESSION_KEY, saveState.data.token)
+            sessionDataEditor.putString(SF_USER_SESSION_USERNAME, saveState.data.username)
+            sessionDataEditor.apply()
+
+            authReloadIn(false)
+
+//            navController.navigate(
+//                TeamRoutes.TEAM_ROSTER.replace(TeamRoutes.ARG_TAG_TEAM_ID, teamId.toString()))
+        }
+
+        else -> {
+            Log.i("Save", "Authentication failed")
+            invalidLoginText = "Invalid Login"
+        }
     }
 }
 
@@ -83,28 +185,8 @@ private fun MainScreenNavigationConfigurations(
         composable(SFBottomNavItem.LockerRoom.route) {
             LockerRoomPage(navController)
         }
-        composable(SFBottomNavItem.Draft.route) {
-            StubPage(titleIn = SFBottomNavItem.Draft.title)
-        }
-        composable(SFBottomNavItem.Add.route) {
-            AddTeamPage(navController)
-        }
-        composable(SFBottomNavItem.Questions.route) {
-            StubPage(titleIn = SFBottomNavItem.Questions.title)
-        }
         composable(SFBottomNavItem.Settings.route) {
-            StubPage(titleIn = SFBottomNavItem.Settings.title)
-        }
-
-        navigation(startDestination = SFBottomNavItem.Add.route, route = "addStub") {
-            composable(route = SFBottomNavItem.Add.route) {
-                AddTeamPage(navController)
-            }
-            composable(route = AddRoutes.LEAGUES_BY_GAME, arguments = listOf(
-                navArgument(AddRoutes.ARG_GAME_ABBREV) { type = NavType.StringType})) {
-                val gameAbbrevArgIn = it.arguments?.getString(AddRoutes.ARG_GAME_ABBREV) ?: "UNK"
-                AddForGamePage(navController = navController, gameAbbrev = gameAbbrevArgIn)
-            }
+            StubPage()
         }
 
         navigation(startDestination = SFBottomNavItem.LockerRoom.route, route = "lockerStub") {
@@ -137,49 +219,7 @@ private fun MainScreenNavigationConfigurations(
                     val teamIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_TEAM_ID) ?: -1
                     TeamTransactionsPage(teamId = teamIdArgIn)
                 }
-                composable(route = TeamRoutes.TEAM_SETTINGS, arguments = listOf(
-                    navArgument(TeamRoutes.ARG_TEAM_ID) { type = NavType.IntType})) {
-                    val teamIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_TEAM_ID) ?: -1
-                    TeamSettingsPage(navController = navController, teamId = teamIdArgIn)
-                }
-                composable(route = TeamRoutes.TEAM_DD1_PICKS, arguments = listOf(
-                    navArgument(TeamRoutes.ARG_TEAM_ID) { type = NavType.IntType})) {
-                    val teamIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_TEAM_ID) ?: -1
-                    TeamPickEmPage(teamId = teamIdArgIn)
-                }
-                composable(route = TeamRoutes.TEAM_DD2_PICKS, arguments = listOf(
-                    navArgument(TeamRoutes.ARG_TEAM_ID) { type = NavType.IntType})) {
-                    val teamIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_TEAM_ID) ?: -1
-                    TeamDoubleDownPage(teamId = teamIdArgIn)
-                }
-                composable(route = TeamRoutes.TEAM_BC_SPELLS, arguments = listOf(
-                    navArgument(TeamRoutes.ARG_TEAM_ID) { type = NavType.IntType})) {
-                    val teamIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_TEAM_ID) ?: -1
-                    TeamSpellsPage(teamId = teamIdArgIn)
-                }
-                composable(route = TeamRoutes.TEAM_PP_SELECTIONS, arguments = listOf(
-                    navArgument(TeamRoutes.ARG_TEAM_ID) { type = NavType.IntType})) {
-                    val teamIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_TEAM_ID) ?: -1
-                    TeamPennantsPage(teamId = teamIdArgIn)
-                }
-                composable(route = TeamRoutes.TEAM_WS_SHOW, arguments = listOf(
-                    navArgument(TeamRoutes.ARG_TEAM_ID) { type = NavType.IntType})) {
-                    val teamIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_TEAM_ID) ?: -1
-                    TeamWeeklySpecialPage(teamId = teamIdArgIn)
-                }
-                composable(route = TeamRoutes.TEAM_CHANGE_AVATAR_SELECT_GROUP, arguments = listOf(
-                    navArgument(TeamRoutes.ARG_TEAM_ID) { type = NavType.IntType})) {
-                    val teamIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_TEAM_ID) ?: -1
-                    TeamChangeAvatarSelectGroupPage(navController = navController, teamId = teamIdArgIn)
-                }
-                composable(route = TeamRoutes.TEAM_CHANGE_AVATAR_SELECT_AVATAR, arguments = listOf(
-                    navArgument(TeamRoutes.ARG_TEAM_ID) { type = NavType.IntType},
-                    navArgument(TeamRoutes.ARG_AVATAR_GROUP) { type = NavType.StringType})) {
-                    val teamIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_TEAM_ID) ?: -1
-                    val avatarGroupArgIn = it.arguments?.getString(TeamRoutes.ARG_AVATAR_GROUP) ?: "UNK"
-                    TeamChangeAvatarSelectAvatarPage(navController = navController,
-                        teamId = teamIdArgIn, avatarGroup = avatarGroupArgIn)
-                }
+
                 composable(route = TeamRoutes.LEAGUE_HOME, arguments = listOf(
                     navArgument(TeamRoutes.ARG_LEAGUE_ID) { type = NavType.IntType})) {
                     val leagueIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_LEAGUE_ID) ?: -1
@@ -235,69 +275,6 @@ private fun MainScreenNavigationConfigurations(
                     val matchupArgIn = it.arguments?.getInt(TeamRoutes.ARG_MATCHUP_NUM) ?: -1
                     ScorecardPage(leagueId = leagueIdArgIn,
                         weekNum = weekArgIn, matchupNum = matchupArgIn)
-                }
-                composable(route = TeamRoutes.TEAM_ROSTER, arguments = listOf(
-                    navArgument(TeamRoutes.ARG_TEAM_ID) { type = NavType.IntType})) {
-                    val teamIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_TEAM_ID) ?: -1
-                    TeamRosterPage(navController = navController, teamId = teamIdArgIn)
-                }
-
-                navigation(startDestination = TeamRoutes.TEAM_ROSTER, route = "teamRosterStub") {
-                    composable(route = TeamRoutes.TEAM_ROSTER, arguments = listOf(
-                        navArgument(TeamRoutes.ARG_TEAM_ID) { type = NavType.IntType})) {
-                        val teamIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_TEAM_ID) ?: -1
-                        TeamRosterPage(navController = navController, teamId = teamIdArgIn)
-                    }
-
-                    composable(route = TeamRoutes.PLAYER_INFO, arguments = listOf(
-                        navArgument(TeamRoutes.ARG_PLAYER_ID) { type = NavType.IntType})) {
-                        val playerIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_PLAYER_ID) ?: -1
-                        PlayerInfoPage(playerId = playerIdArgIn)
-                    }
-
-                    composable(route = TeamRoutes.TEAM_ROSTER_ADD, arguments = listOf(
-                        navArgument(TeamRoutes.ARG_TEAM_ID) { type = NavType.IntType},
-                        navArgument(TeamRoutes.ARG_SLOT_NAME) { type = NavType.StringType},
-                        navArgument(TeamRoutes.ARG_IS_DR) { type = NavType.StringType},
-                        navArgument(TeamRoutes.ARG_REQUEST_POS) { type = NavType.StringType}
-                        )) {
-                        val teamIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_TEAM_ID) ?: -1
-                        val slotNameArgIn = it.arguments?.getString(TeamRoutes.ARG_SLOT_NAME) ?: "UNK"
-                        val isDrArgIn = it.arguments?.getString(TeamRoutes.ARG_IS_DR) ?: "UNK"
-                        val requestPosArgIn = it.arguments?.getString(TeamRoutes.ARG_REQUEST_POS) ?: "UNK"
-                        TeamRosterAddPage(navController = navController, teamId = teamIdArgIn, slotName = slotNameArgIn, isDr = isDrArgIn,
-                            requestPos = requestPosArgIn)
-                    }
-
-                    navigation(startDestination = TeamRoutes.TEAM_ROSTER_ADD, route = "teamRosterAddStub") {
-
-                        composable(route = TeamRoutes.TEAM_ROSTER_ADD, arguments = listOf(
-                            navArgument(TeamRoutes.ARG_TEAM_ID) { type = NavType.IntType},
-                            navArgument(TeamRoutes.ARG_SLOT_NAME) { type = NavType.StringType},
-                            navArgument(TeamRoutes.ARG_IS_DR) { type = NavType.StringType},
-                            navArgument(TeamRoutes.ARG_REQUEST_POS) { type = NavType.StringType}
-                        )) {
-                            val teamIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_TEAM_ID) ?: -1
-                            val slotNameArgIn = it.arguments?.getString(TeamRoutes.ARG_SLOT_NAME) ?: "UNK"
-                            val isDrArgIn = it.arguments?.getString(TeamRoutes.ARG_IS_DR) ?: "UNK"
-                            val requestPosArgIn = it.arguments?.getString(TeamRoutes.ARG_REQUEST_POS) ?: "UNK"
-                            TeamRosterAddPage(navController = navController, teamId = teamIdArgIn, slotName = slotNameArgIn, isDr = isDrArgIn,
-                                requestPos = requestPosArgIn)
-                        }
-
-                        composable(route = TeamRoutes.TEAM_ROSTER_ADD_SLOT, arguments = listOf(
-                            navArgument(TeamRoutes.ARG_TEAM_ID) { type = NavType.IntType},
-                            navArgument(TeamRoutes.ARG_PLAYER_ID) { type = NavType.IntType})) {
-                            val teamIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_TEAM_ID) ?: -1
-                            val playerIdArgIn = it.arguments?.getInt(TeamRoutes.ARG_PLAYER_ID) ?: -1
-                            val onWaiversArgIn = it.arguments?.getString(TeamRoutes.ARG_ON_WAIVERS) ?: -1
-                            TeamRosterAddSlotPage(navController, teamId = teamIdArgIn, playerId = playerIdArgIn,
-                                onWaivers = onWaiversArgIn.toString())
-
-                        }
-
-                    }
-
                 }
 
             }

@@ -1,5 +1,6 @@
 package com.sirfootball.android.viewmodel
 
+import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -14,7 +15,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class GetPreviewViewModel @Inject constructor(private val apiService: AppService): ViewModel() {
+class GetPreviewViewModel @Inject constructor(private val apiService: AppService, private val applicationContext: Context): SFViewModel() {
 
     private val _getPreviewResponse = mutableStateOf<ApiState<LoadPreviewResponse>>(ApiState.Loading)
     val getPreviewResponse : State<ApiState<LoadPreviewResponse>> = _getPreviewResponse
@@ -23,7 +24,7 @@ class GetPreviewViewModel @Inject constructor(private val apiService: AppService
         viewModelScope.launch {
             try {
                 Log.i("Load", "Preview is being loaded")
-                val response = apiService.getPreview(leagueId, weekNum, matchupNum)
+                val response = apiService.getPreview(leagueId, weekNum, matchupNum, produceAuthHeaders(applicationContext = applicationContext))
                 _getPreviewResponse.value = ApiState.Success(response)
             } catch (e: Exception) {
                 val errorMessage = "error during get team info"

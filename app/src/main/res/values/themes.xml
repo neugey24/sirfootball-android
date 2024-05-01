@@ -13,4 +13,9 @@
         <item name="android:statusBarColor">?attr/colorPrimaryVariant</item>
         <!-- Customize your theme here. -->
     </style>
+    <style name="Theme.SplashScreen.SFSplash" parent="Theme.SplashScreen.IconBackground">
+        <item name="windowSplashScreenBackground">#FFF6F1D8</item>
+        <item name="windowSplashScreenAnimatedIcon">@drawable/crowned_knight_sm</item>
+        <item name="postSplashScreenTheme">@style/Theme.SirFootballAndroidApp</item>
+    </style>
 </resources>

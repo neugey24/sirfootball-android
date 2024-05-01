@@ -12,8 +12,8 @@ class SirGame private constructor() {
             "logo" to "bc2", "gamePage" to "blessed_and_cursed", "scoreDecimalPlaces" to 2, "knightName" to "Caradoc")
 
         private val DD1_DATA = mapOf(
-            "abbrev" to "DD1", "name"  to  "Decisions, Decisions", "style"  to  "decDec", "image"  to  "decdec",
-            "logo" to "dd1", "gamePage" to "decisions_decisions", "scoreDecimalPlaces" to 2, "knightName" to "Claudin")
+            "abbrev" to "DD1", "name"  to  "Decision Time", "style"  to  "decDec", "image"  to  "decdec",
+            "logo" to "dd1", "gamePage" to "decision_time", "scoreDecimalPlaces" to 2, "knightName" to "Claudin")
 
         private val DD2_DATA = mapOf(
             "abbrev" to "DD2", "name"  to  "Double Down", "style"  to  "doubleDown", "image"  to  "doubledown",
@@ -87,7 +87,7 @@ class SirGame private constructor() {
 
         @Composable
         fun formatScoreForGame(scoreIn: Double?, gameAbbrevIn: String) : String {
-            val formatScale = SirGame.GAME_DATA[gameAbbrevIn]?.get("scoreDecimalPlaces") ?: 2
+            val formatScale = GAME_DATA[gameAbbrevIn]?.get("scoreDecimalPlaces") ?: 2
             return "%.${formatScale}f".format(scoreIn)
         }
 

@@ -87,21 +87,6 @@ fun LeagueHomePage(navController: NavHostController, leagueId : Int) {
                 ) {
                     Text("League Standings", fontSize = 16.sp)
                 }
-                if (responseData.gamesCommenced) {
-                    Text(" ", fontSize = 8.sp)
-                    Button(contentPadding = PaddingValues(all = 2.dp),
-                        colors = ButtonDefaults.buttonColors(containerColor = Color.Blue,
-                            contentColor = Color.White),
-                        modifier = Modifier.size(width = 360.dp, height = 34.dp),
-                        onClick = {
-                            navController.navigate(
-                                TeamRoutes.LEAGUE_SCOREBOARD.replace(TeamRoutes.ARG_TAG_LEAGUE_ID, leagueId.toString())
-                            )
-                        }
-                    ) {
-                        Text("League Scoreboard", fontSize = 16.sp)
-                    }
-                }
                 Text(" ", fontSize = 8.sp)
                 Button(contentPadding = PaddingValues(all = 2.dp),
                     colors = ButtonDefaults.buttonColors(containerColor = Color.Blue,
@@ -127,17 +112,6 @@ fun LeagueHomePage(navController: NavHostController, leagueId : Int) {
                     }
                 ) {
                     Text("League High Scores", fontSize = 16.sp)
-                }
-                Text(" ", fontSize = 8.sp)
-                Button(contentPadding = PaddingValues(all = 2.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Blue,
-                        contentColor = Color.White),
-                    modifier = Modifier.size(width = 360.dp, height = 34.dp),
-                    onClick = {
-
-                    }
-                ) {
-                    Text("Game Rules", fontSize = 16.sp)
                 }
                 Text(" ", fontSize = 8.sp)
                 Button(contentPadding = PaddingValues(all = 2.dp),

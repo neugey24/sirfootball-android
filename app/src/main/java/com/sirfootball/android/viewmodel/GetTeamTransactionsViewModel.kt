@@ -1,5 +1,6 @@
 package com.sirfootball.android.viewmodel
 
+import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -14,7 +15,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class GetTeamTransactionsViewModel @Inject constructor(private val apiService: AppService): ViewModel() {
+class GetTeamTransactionsViewModel @Inject constructor(private val apiService: AppService, private val applicationContext: Context): SFViewModel() {
 
     private val _getTeamTransactionsResponse = mutableStateOf<ApiState<LoadTeamTransactionsCompositeResponse>>(ApiState.Loading)
     val getTeamTransactionsResponse : State<ApiState<LoadTeamTransactionsCompositeResponse>> = _getTeamTransactionsResponse
@@ -23,8 +24,8 @@ class GetTeamTransactionsViewModel @Inject constructor(private val apiService: A
         viewModelScope.launch {
             try {
                 Log.i("Load", "Team transactions being loaded for team id $teamId")
-                val teamResponse = apiService.getTeamInfo(teamId)
-                val tranResponse = apiService.getTeamTrans(teamId)
+                val teamResponse = apiService.getTeamInfo(teamId, produceAuthHeaders(applicationContext = applicationContext))
+                val tranResponse = apiService.getTeamTrans(teamId, produceAuthHeaders(applicationContext = applicationContext))
                 val compositeResponse = LoadTeamTransactionsCompositeResponse(tran = tranResponse,
                     info = teamResponse)
                 _getTeamTransactionsResponse.value = ApiState.Success(compositeResponse)

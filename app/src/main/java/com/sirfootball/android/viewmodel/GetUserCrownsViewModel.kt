@@ -1,5 +1,6 @@
 package com.sirfootball.android.viewmodel
 
+import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -14,7 +15,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class GetUserCrownsViewModel @Inject constructor(private val apiService: AppService): ViewModel() {
+class GetUserCrownsViewModel @Inject constructor(private val apiService: AppService, private val applicationContext: Context): SFViewModel() {
 
     private val _getCrownsResponse = mutableStateOf<ApiState<LoadUserCrownsResponse>>(ApiState.Loading)
     val getCrownsResponse : State<ApiState<LoadUserCrownsResponse>> = _getCrownsResponse
@@ -23,7 +24,7 @@ class GetUserCrownsViewModel @Inject constructor(private val apiService: AppServ
         viewModelScope.launch {
             try {
                 Log.i("Load", "crowns being loaded for user")
-                val crownsResponse = apiService.getCrowns()
+                val crownsResponse = apiService.getCrowns(produceAuthHeaders(applicationContext = applicationContext))
                 _getCrownsResponse.value = ApiState.Success(crownsResponse)
             } catch (e: Exception) {
                 val errorMessage = "error during get crowns"

@@ -1,5 +1,6 @@
 package com.sirfootball.android.viewmodel
 
+import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
@@ -14,7 +15,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class GetTeamInfoViewModel @Inject constructor(private val apiService: AppService): ViewModel() {
+class GetTeamInfoViewModel @Inject constructor(private val apiService: AppService, private val applicationContext: Context): SFViewModel() {
 
     private val _getTeamInfoResponse = mutableStateOf<ApiState<GetTeamInfoResponse>>(ApiState.Loading)
     val getTeamInfoResponse : State<ApiState<GetTeamInfoResponse>> = _getTeamInfoResponse
@@ -23,7 +24,7 @@ class GetTeamInfoViewModel @Inject constructor(private val apiService: AppServic
         viewModelScope.launch {
             try {
                 Log.i("Load", "Team id being loaded is ${teamId}")
-                val response = apiService.getTeamInfo(teamId)
+                val response = apiService.getTeamInfo(teamId, produceAuthHeaders(applicationContext = applicationContext))
                 _getTeamInfoResponse.value = ApiState.Success(response)
             } catch (e: Exception) {
                 val errorMessage = "error during get team info"

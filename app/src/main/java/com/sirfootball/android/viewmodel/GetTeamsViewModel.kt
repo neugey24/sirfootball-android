@@ -1,9 +1,9 @@
 package com.sirfootball.android.viewmodel
 
+import android.content.Context
 import android.util.Log
 import androidx.compose.runtime.State
 import androidx.compose.runtime.mutableStateOf
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.sirfootball.android.data.api.ApiState
 import com.sirfootball.android.data.api.AppService
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 
 @HiltViewModel
-class GetTeamsViewModel @Inject constructor(private val apiService: AppService): ViewModel() {
+class GetTeamsViewModel @Inject constructor(private val apiService: AppService, private val applicationContext: Context): SFViewModel() {
 
     private val _getTeamsResponse = mutableStateOf<ApiState<LoadUserTeamsResponse>>(ApiState.Loading)
     val getTeamsResponse : State<ApiState<LoadUserTeamsResponse>> = _getTeamsResponse
@@ -22,7 +22,7 @@ class GetTeamsViewModel @Inject constructor(private val apiService: AppService):
     fun fetch() {
         viewModelScope.launch {
             try {
-                val response = apiService.getTeams()
+                val response = apiService.getTeams(produceAuthHeaders(applicationContext = applicationContext))
                 _getTeamsResponse.value = ApiState.Success(response)
             } catch (e: Exception) {
                 val errorMessage = "error during get teams"

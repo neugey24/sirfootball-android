@@ -14,27 +14,6 @@ sealed class SFBottomNavItem(
             R.drawable.ic_home_black_24dp
         )
 
-    object Draft :
-        SFBottomNavItem(
-            "draft",
-            "Draft",
-            R.drawable.ic_swap_calls_black_24dp
-        )
-
-    object Add :
-        SFBottomNavItem(
-            "add",
-            "Add",
-            R.drawable.ic_add_black_24dp
-        )
-
-    object Questions :
-        SFBottomNavItem(
-            "questions",
-            "Questions",
-            R.drawable.ic_help_center_black_24dp
-        )
-
     object Settings :
         SFBottomNavItem(
             "settings",

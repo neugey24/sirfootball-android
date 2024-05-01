@@ -1,5 +1,6 @@
 package com.sirfootball.android.ui.root
 
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -88,8 +89,9 @@ fun UserCrownsPage() {
 @Composable
 fun RenderCrown(crown: Crown) {
     val crownImageId = LocalContext.current.resources.getIdentifier(
-        "crown_${crown.image.replace(".jpeg", "")}", "drawable",
+        "crown_${crown.image.replace(".webp", "")}", "drawable",
         LocalContext.current.packageName)
+    Log.i("crownRender", "will try to render " + crown.image)
 
     Text(" ", fontSize = 5.sp)
     Divider()

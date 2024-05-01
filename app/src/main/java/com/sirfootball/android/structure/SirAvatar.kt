@@ -412,9 +412,18 @@ class SirAvatar private constructor() {
 
                     AvatarGroup.halloween.toString() -> listOf(
                         "bride_frankenstein", "dracula", "female_specter", "frankenstein",
-                        "ghost1", "ghost2", "ghost3", "green_witch", "mummy1", "mummy2",
+                        "ghost1", "ghost2", "ghost3", "green_witch", "mummy1", "mummy2", "mummy3",
                         "scarecrow", "skeleton_ghoul", "skeleton_witch", "vampire_priestess",
                         "vampire_warrior", "werewolf", "werewolf2", "zombie_warrior"
+                    )
+
+                    AvatarGroup.kings_queens.toString() -> listOf(
+                        "armor_head", "battle_king", "battle_ready", "book", "caster_king", "caster_queen", "cat_queen", "chain_king",
+                        "chain_queen", "charms", "checkered_shield", "coins", "dice", "emoji_queen", "fair_warrior", "feline", "friend",
+                        "frog", "game_on", "hammer_queen", "happy_battle", "heavy_armor", "horseback", "king_hammer", "king_pet_dragon",
+                        "kiss", "kitty", "knight_n_queen", "magic_queen", "orb", "pup", "queen_dog", "rabbit", "regal", "rich_girlwebp",
+                        "riches", "rider", "ruler_queen", "scorned", "shield_maiden", "throne", "throne_queen", "treasures",
+                        "valkyrie_queen", "warrior", "wealth"
                     )
 
                     AvatarGroup.meme.toString() -> listOf(
@@ -534,6 +543,13 @@ class SirAvatar private constructor() {
 
                     )
 
+                    AvatarGroup.pet_dragons.toString() -> listOf(
+                        "attacker", "baller", "battler", "beach", "bengal", "big_sword", "blue_streak", "cutie",
+                        "dj", "fighter", "firework", "football", "friendly", "fury", "goldy", "greenie", "grump", "gus",
+                        "heart", "jewels", "laughter", "magic", "mechanized", "prince", "purps", "red", "ref", "salty", "spectrum",
+                        "toy", "traveler", "treasure"
+                    )
+
                     AvatarGroup.rpg_warriors.toString() -> listOf(
                         "alchemist", "archer", "axe_dwarf", "bard", "blue_knight",
                         "cleric", "elven_archer", "female_mage", "flail_warrior", "hammer_warrior",
@@ -555,11 +571,28 @@ class SirAvatar private constructor() {
                         "weapon_helmet2","whisper_alien","wired_helmet","zebra_gunner","zombie","zombie2"
                     )
 
+                    AvatarGroup.shields.toString() -> listOf(
+                        "ally", "campmaker", "firebrand", "hotshot", "perennial", "seized", "aquatic", "capitol",
+                        "firebreather",    "jayfighter", "pirate", "shamrock", "armorer", "claw", "firehawk",
+                        "levelup", "prideknight", "smurfhunter", "baron", "cottoncandy", "grapeman", "matador",
+                        "provoker", "starcrosser", "behemoth", "crawler", "greenhip", "mischief", "reptile", "starforge",
+                        "blueberry", "crossways", "hardcandy", "nefarious", "rival", "steelheart", "bluenote", "deadwing",
+                        "hawkhunter", "ogrewind", "rubes", "sudden", "borer", "deathswing", "heartbreaker", "oink", "sagefinder",
+                        "sunrise", "brawler", "dragonforce", "hellion", "overdrive", "scope", "valiant", "bridgebuilder",
+                        "feathersword", "highspirit", "pathfinder", "seafarer"
+                    )
+
                     AvatarGroup.superhero.toString() -> listOf(
                         "android", "angel", "blue_streak", "chrome", "cobra", "diamonds", "disco", "dragoness",
                         "firefly", "huntress", "inspector", "intrigue", "ivory", "kombat", "magenta",
                         "pearls", "pilot", "portal", "pounder", "priestess", "reaper", "shooter",
                         "spike", "stripes", "teller", "tinkerer", "viper", "vr_man", "wings"
+                    )
+
+                    AvatarGroup.wizards.toString() -> listOf(
+                        "boy_teller", "burgundy", "caster", "caster2", "fire", "friendly", "gardener", "ghostie", "guide",
+                        "icer", "knight_mage", "masked", "purple", "reader", "ruby", "shroud", "spectral", "staff_boy",
+                        "survivor", "teller", "townkeep", "trinkets", "wanderer"
                     )
 
                     else -> listOf()
@@ -589,13 +622,17 @@ enum class AvatarGroup {
     , gnomes
     , gods
     , halloween
+    , kings_queens
     , meme
     , military
     , music
     , ogres_orcs
     , other_sports
     , painted_footballs
+    , pet_dragons
     , rpg_warriors
     , scifi
+    , shields
     , superhero
+    , wizards
 }
